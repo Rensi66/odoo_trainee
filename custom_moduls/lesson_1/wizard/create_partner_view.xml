@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="wizard_custom_form" model="ir.ui.view">
+        <field name="name">custom.wizard.view</field>
+        <field name="model">create.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="is_company"/>
+                </group>
+                <footer>
+                    <button name="action_apply" string="Create" type="object"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
