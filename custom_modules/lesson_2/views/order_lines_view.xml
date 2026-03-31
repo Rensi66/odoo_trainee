@@ -8,13 +8,25 @@
                 <sheet>
                     <field name="order_no"/>
                     <field name="line_ids">
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <field name="product_name"/>
                             <field name="unit_price"/>
                             <field name="count"/>
+                            <field name="discount"/>
                             <field name="subtotal"/>
-                        </tree>
+                        </list>
                     </field>
+
+                    <group name="summary_group" col="6" class="mt-2">
+                        <group class="oe_subtotal_footer oe_right" colspan="2">
+                            <field name="delivery_cost" widget="monetary"/>
+                            <field name="global_discount"/>
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="final_amount"/>
+                            </div>
+                            <field name="final_amount" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"/>
+                        </group>
+                    </group>
                 </sheet>
             </form>
         </field>
