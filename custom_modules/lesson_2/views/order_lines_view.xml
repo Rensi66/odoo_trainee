@@ -4,27 +4,41 @@
         <field name="name">order.line.view</field>
         <field name="model">model.order</field>
         <field name="arch" type="xml">
-            <form>
+              <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_set_to_draft" string="Set to Draft" type="object"
+                            invisible="state != 'confirmed'"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+
                 <sheet>
-                    <field name="order_no"/>
-                    <field name="line_ids">
+                    <group>
+                        <field name="order_no"/>
+                    </group>
+
+                    <field name="line_ids" readonly="state == 'confirmed'">
                         <list editable="bottom">
-                            <field name="product_name"/>
-                            <field name="unit_price"/>
-                            <field name="count"/>
+                            <field name="product_name" readonly="parent.state == 'confirmed'"/>
+                            <field name="unit_price" readonly="parent.state == 'confirmed'"/>
+                            <field name="count" readonly="parent.state == 'confirmed'"/>
                             <field name="discount"/>
                             <field name="subtotal"/>
                         </list>
                     </field>
 
                     <group name="summary_group" col="6" class="mt-2">
+                        <group colspan="4">
+                            </group>
                         <group class="oe_subtotal_footer oe_right" colspan="2">
-                            <field name="delivery_cost" widget="monetary"/>
+                            <field name="delivery_cost"/>
                             <field name="global_discount"/>
                             <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                <label for="final_amount"/>
+                                <label for="final_amount" string="Grand Total"/>
                             </div>
-                            <field name="final_amount" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"/>
+                            <field name="final_amount" nolabel="1" class="oe_subtotal_footer_separator"/>
                         </group>
                     </group>
                 </sheet>
