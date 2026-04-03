@@ -28,7 +28,7 @@ class ModelOrder(models.Model):
         for record in self:
             record.state = 'draft'
 
-    @api.depends("line_ids.raw_total","line_ids.subtotal", "delivery_cost", "global_discount")
+    @api.depends("line_ids", "line_ids.raw_total","line_ids.subtotal", "delivery_cost", "global_discount")
     def _compute_final_amount(self):
         for order in self:
             raw_sum = sum(order.line_ids.mapped('raw_total'))
