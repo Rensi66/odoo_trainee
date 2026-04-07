@@ -19,8 +19,10 @@
                         <field name="order_no"/>
                     </group>
 
-                    <field name="line_ids" readonly="state == 'confirmed'">
-                        <list editable="bottom">
+                    <field name="line_ids">
+                        <list editable="bottom"
+                                create="parent.state == 'draft'"
+                                delete="parent.state == 'draft'">
                             <field name="product_name" readonly="parent.state == 'confirmed'"/>
                             <field name="unit_price" readonly="parent.state == 'confirmed'"/>
                             <field name="count" readonly="parent.state == 'confirmed'"/>
