@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -10,4 +11,10 @@ class SaleOrder(models.Model):
         for order in self:
             ids = order.order_line.mapped('product_id').ids
             order.selected_product_json = ids or []
-            print(f">>> JSON DATA FOR DOMAIN: {order.selected_product_json}")
+
+    @api.constrains('order_line')
+    def _check_product_id(self):
+        for order in self:
+            product_ids = order.order_line.mapped("product_id").ids
+            if len(product_ids) != len(set(product_ids)):
+                raise ValidationError("You can`t add same products")
