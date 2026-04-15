@@ -1,0 +1,1 @@
+from . import project_res_partner, project_sale_order, project_stock
