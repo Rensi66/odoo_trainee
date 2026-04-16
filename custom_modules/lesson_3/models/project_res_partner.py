@@ -1,5 +1,5 @@
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class ProjectResPartner(models.Model):
@@ -34,6 +34,17 @@ class ProjectResPartner(models.Model):
     def write(self, vals):
         if self._context.get("skip_primary_toggle"):
             return super().write(vals)
+
+        if vals.get("is_primary") is False:
+            for record in self:
+                other_primary_contacts = self.search_count([
+                    ('parent_id', '=', record.parent_id.id),
+                    ('is_primary', '=', True),
+                    ('id', '!=', record.id),
+                ])
+
+                if other_primary_contacts == 0:
+                    raise ValidationError("You can`t have less than 1 primary contact")
 
         update = super().write(vals)
 
