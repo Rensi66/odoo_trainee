@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="own_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 13px; color: black; font-family: sans-serif;">
+                        <table class="table table-bordered" style="border: 2px solid black; margin-bottom: 0;">
+                            <tr>
+                                <td colspan="2" rowspan="2" style="width: 50%; border: 1px solid black;">
+                                    <t t-if="doc.company_id.partner_id.bank_ids">
+                                        <t t-out="doc.company_id.partner_id.bank_ids[0].bank_id.name"/>
+                                    </t>
+                                    <br/><br/>
+                                    <span>Банк получателя</span>
+                                </td>
+                                <td style="width: 15%; border: 1px solid black;">БИК</td>
+                                <td style="border: 1px solid black;">
+                                    <t t-if="doc.company_id.partner_id.bank_ids">
+                                        <t t-out="doc.company_id.partner_id.bank_ids[0].bank_id.bic"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid black;">Сч. №</td>
+                                <td style="border: 1px solid black;">
+                                    <t t-if="doc.company_id.partner_id.bank_ids">
+                                        <t t-out="doc.company_id.partner_id.bank_ids[0].acc_number"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 25%; border: 1px solid black;">ИНН <t t-out="doc.company_id.vat"/></td>
+                                <td style="width: 25%; border: 1px solid black;">КПП <t t-out="doc.company_id.partner_id.kpp if 'kpp' in doc.company_id.partner_id._fields else ''"/></td>
+                                <td rowspan="2" style="vertical-align: middle; border: 1px solid black;">Сч. №</td>
+                                <td rowspan="2" style="vertical-align: middle; border: 1px solid black;"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="border: 1px solid black;">
+                                    <t t-out="doc.company_id.name"/>
+                                    <br/><br/>
+                                    <span>Получатель</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <h3 style="font-weight: bold; text-align: left; margin: 25px 0;">
+                            Счет на оплату № <t t-out="doc.name"/> от <t t-out="doc.date_order" t-options='{"widget": "date", "format": "dd.MM.yyyy"}'/>
+                        </h3>
+                        <div style="margin-bottom: 20px;">
+                            <div class="row">
+                                <div class="col-2">Поставщик:</div>
+                                <div class="col-10">
+                                    <strong><t t-out="doc.company_id.partner_id.display_name"/>, ИНН <t t-out="doc.company_id.vat"/>, <t t-out="doc.company_id.partner_id.contact_address"/></strong>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-2">Покупатель:</div>
+                                <div class="col-10">
+                                    <strong><t t-out="doc.partner_id.display_name"/>, <t t-out="doc.partner_id.contact_address"/></strong>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr style="text-align: center; font-weight: bold; background-color: #eee;">
+                                    <th style="border: 1px solid black;">№</th>
+                                    <th style="border: 1px solid black;">Товары (работы, услуги)</th>
+                                    <th style="border: 1px solid black;">Кол-во</th>
+                                    <th style="border: 1px solid black;">Ед.</th>
+                                    <th style="border: 1px solid black;">Цена</th>
+                                    <th style="border: 1px solid black;">Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.order_line" t-as="line">
+                                    <tr>
+                                        <td class="text-center" style="border: 1px solid black;"><t t-out="line_index + 1"/></td>
+                                        <td style="border: 1px solid black;"><t t-out="line.name"/></td>
+                                        <td class="text-end" style="border: 1px solid black;"><t t-out="line.product_uom_qty"/></td>
+                                        <td class="text-center" style="border: 1px solid black;"><t t-out="line.product_uom.name"/></td>
+                                        <td class="text-end" style="border: 1px solid black;"><t t-out="'%.2f' % line.price_unit"/></td>
+                                        <td class="text-end" style="border: 1px solid black;"><t t-out="'%.2f' % line.price_subtotal"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div class="row justify-content-end">
+                            <div class="col-4">
+                                <table class="w-100">
+                                    <tr>
+                                        <td class="text-end">Итого:</td>
+                                        <td class="text-end"><strong><t t-out="'%.2f' % doc.amount_untaxed"/></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-end">НДС:</td>
+                                        <td class="text-end"><strong><t t-out="'%.2f' % doc.amount_tax"/></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-end">Всего к оплате:</td>
+                                        <td class="text-end"><strong><t t-out="'%.2f' % doc.amount_total"/></strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="item_for_act_window" name="Lesson 4" sequence="2" action="action_act_window"/>
+    <menuitem id="item_for_act_url" name="My GitHub" parent="item_for_act_window" action="action_for_act_url"/>
+    <menuitem id="item_for_client" name="My Dashboard" parent="item_for_act_window" action="action_for_client"/>
+</odoo>

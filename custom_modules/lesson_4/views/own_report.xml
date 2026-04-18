@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sale.action_report_pro_forma_invoice" model="ir.actions.report">
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="own_report" model="ir.actions.report">
+        <field name="name">Own report</field>
+        <field name="sequence">5</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">lesson_4.own_report_template</field>
+        <field name="report_file">lesson_4.own_report_template</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+    </record>
+
+    <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="sequence">100</field>
+    </record>
+
+</odoo>
