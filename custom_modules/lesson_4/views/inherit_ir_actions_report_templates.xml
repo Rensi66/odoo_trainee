@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="inherit_report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_is_express" class="text-end text-nowrap">Is Express?</th>
+            <th name="th_express_picking_name" class="text-end">Express Picking</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_name']" position="after">
+            <td name="td_is_express" class="text-end">
+                <span t-if="line.is_express">Yes</span>
+                <span t-else="">No</span>
+            </td>
+            <td name="td_express_picking" class="text-end">
+                <span t-field="line.express_picking_id"></span>
+            </td>
+        </xpath>
+    </template>
+</odoo>
