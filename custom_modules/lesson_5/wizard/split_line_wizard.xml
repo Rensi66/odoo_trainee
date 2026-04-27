@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="split_line_view_form" model="ir.ui.view">
+        <field name="name">model.wizard.form</field>
+        <field name="model">model.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Split Lines">
+                <sheet>
+                    <field name="line_ids">
+                        <list editable="bottom">
+                            <field name="product_name"/>
+                            <field name="count"/>
+                            <field name="unit_price"/>
+                            <field name="total"/>
+                            <field name="is_basic" invisible="True"/>
+                        </list>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="action_save_changes"
+                            type="object"
+                            string="Save"
+                            class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
