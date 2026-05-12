@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_tennis_entrance_check" model="ir.actions.server">
+        <field name="name">action.tennis.entrance.check</field>
+        <field name="model_id" ref="model_tennis_center"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_check_role_and_open_view()
+        </field>
+    </record>
+
+    <menuitem id="menu_tennis_root" name="World Of Tennis" sequence="1" action="action_tennis_entrance_check"/>
+</odoo>

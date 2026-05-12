@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="module_category_world_of_tennis" model="ir.module.category">
+        <field name="name">World Of Tennis Management</field>
+        <field name="description">Category for management access in a tennis centers</field>
+    </record>
+
+    <record id="group_tennis_owner" model="res.groups">
+        <field name="name">Owner</field>
+        <field name="category_id" ref="module_category_world_of_tennis"/>
+    </record>
+
+    <record id="group_tennis_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_world_of_tennis"/>
+    </record>
+
+    <record id="group_tennis_coach" model="res.groups">
+        <field name="name">Coach</field>
+        <field name="category_id" ref="module_category_world_of_tennis"/>
+    </record>
+</odoo>

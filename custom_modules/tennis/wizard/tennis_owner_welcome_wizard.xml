@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_tennis_welcome_wizard_form" model="ir.ui.view">
+        <field name="name">tennis.welcome.wizard.form</field>
+        <field name="model">tennis.welcome.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Welcome" create="false" edit="false" delete="false" class="o_form_nosheet">
+                <field name="name" invisible="True"/>
+                <div class="o_welcome_container" style="background-color: #f8f9fa; min-height: 100vh; padding: 40px 20px;">
+
+                    <div class="text-center mb-5" style="margin-top: 50px;">
+                        <h1 style="font-weight: bold; color: #2C3E50; font-size: 3rem;">Добро пожаловать в World Of Tennis!</h1>
+                        <p class="text-muted" style="font-size: 1.4em;">Выберите вашу роль, чтобы настроить рабочее пространство</p>
+                    </div>
+
+                    <div class="row justify-content-center d-flex align-items-stretch" style="max-width: 1200px; margin: 0 auto;">
+                        <div class="col-12 col-md-5 mb-4">
+                            <div class="text-center p-5 border-0 rounded shadow-sm h-100 bg-white" style="border-radius: 20px !important;">
+                                <div style="font-size: 5rem;" class="mb-4">🏢</div>
+                                <h2 style="font-weight: 700; color: #34495E;">Владелец</h2>
+                                <p class="text-muted" style="font-size: 1.1em; line-height: 1.6;">
+                                    Создайте сеть спортивных центров, настройте время работы и управляйте кортами.
+                                </p>
+                                <div class="mt-4">
+                                    <button name="action_become_owner"
+                                            type="object"
+                                            string="Начать как владелец"
+                                            class="btn-primary btn-lg w-100"
+                                            style="border-radius: 10px; padding: 15px; font-weight: bold;"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-5 mb-4">
+                            <div class="text-center p-5 border-0 rounded shadow-sm h-100 bg-white" style="border-radius: 20px !important;">
+                                <div style="font-size: 5rem;" class="mb-4">🎾</div>
+                                <h2 style="font-weight: 700; color: #34495E;">Менеджер</h2>
+                                <p class="text-muted" style="font-size: 1.1em; line-height: 1.6;">
+                                    Получили приглашение? Нажмите кнопку ниже, чтобы проверить входящие сообщения.
+                                </p>
+                                <div class="mt-4">
+                                    <button name="action_check_mail"
+                                            type="object"
+                                            string="Посмотреть почту"
+                                            class="btn-secondary btn-lg w-100"
+                                            style="border-radius: 10px; padding: 15px; font-weight: bold; background-color: #E5E7EB; color: #4B5563; border: none;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

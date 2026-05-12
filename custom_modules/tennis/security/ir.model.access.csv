@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tennis_center_owner,tennis.center.owner.access,model_tennis_center,tennis.group_tennis_owner,1,1,1,1
+access_tennis_center_manager,tennis.center.manager.access,model_tennis_center,tennis.group_tennis_manager,1,1,1,0
+access_tennis_center_coach,tennis.center.coach.access,model_tennis_center,tennis.group_tennis_coach,0,0,0,0
+access_tennis_welcome_wizard,tennis.welcome.wizard,model_tennis_welcome_wizard,base.group_user,1,1,1,1
+access_tennis_module,tennis.base.user,model_tennis_center,base.group_user,1,1,1,1
