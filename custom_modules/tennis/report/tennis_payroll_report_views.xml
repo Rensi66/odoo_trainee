@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_payroll_pdf" model="ir.actions.report">
+        <field name="name">Ведомость выплат тренерам</field>
+        <field name="model">tennis.universal.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tennis.report_payroll_template</field>
+        <field name="report_file">tennis.report_payroll_template</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+    <template id="report_payroll_template">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="text-center mb-5">
+                        <h2>Ведомость расчета выплат тренерскому составу</h2>
+                        <h4>Период анализа: <t t-out="date_from"/> — <t t-out="date_to"/></h4>
+                    </div>
+
+                    <table class="table table-bordered table-striped">
+                        <thead class="bg-200">
+                            <tr>
+                                <th>ФИО Тренера</th>
+                                <th class="text-center">Кол-во проведенных занятий</th>
+                                <th class="text-right">Сумма к выплате (ФОТ)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="coaches" t-as="coach">
+                                <tr>
+                                    <td>
+                                        <strong t-out="coach['name']"/>
+                                    </td>
+                                    <td class="text-center align-middle" t-out="coach['trainings_count']"/>
+                                    <td class="text-right align-middle text-danger font-weight-bold">
+                                        <span t-out="coach['total_payout']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr class="bg-100 font-weight-bold" style="border-top: 2px solid #000;">
+                                <td>ИТОГО К ВЫПЛАТЕ</td>
+                                <td class="text-center">
+                                    <t t-out="sum(c['trainings_count'] for c in coaches)"/>
+                                </td>
+                                <td class="text-right text-danger" style="font-size: 16px;">
+                                    <span t-out="total_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

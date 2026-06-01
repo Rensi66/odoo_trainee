@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_tennis_training_stats_graph" model="ir.ui.view">
+        <field name="name">tennis.training.stats.graph</field>
+        <field name="model">tennis.training</field>
+        <field name="arch" type="xml">
+            <graph string="Аналитика доходов" type="bar" stacked="0" sample="1">
+                <field name="start_datetime" interval="month"/>
+                <field name="training_type"/>
+
+                <field name="price_coach" type="measure" string="Заработанные деньги"/>
+                <field name="duration" type="measure" string="Отработанные часы"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_tennis_training_stats_pivot" model="ir.ui.view">
+        <field name="name">tennis.training.stats.pivot</field>
+        <field name="model">tennis.training</field>
+        <field name="arch" type="xml">
+            <pivot string="Сводная таблица" sample="1">
+                <field name="start_datetime" interval="month" type="row"/>
+                <field name="training_type" type="row"/>
+
+                <field name="price_coach" type="measure"/>
+                <field name="duration" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_tennis_training_search" model="ir.ui.view">
+        <field name="name">tennis.training.search</field>
+        <field name="model">tennis.training</field>
+        <field name="arch" type="xml">
+            <search string="Поиск и фильтры">
+                <field name="display_coach" string="Тренер"/>
+                <field name="court"/>
+
+                <filter string="Этот месяц" name="current_month"
+                        domain="[
+                            ('start_datetime', '&gt;=', context_today().strftime('%Y-%m-01')),
+                            ('start_datetime', '&lt;', (context_today() + datetime.timedelta(days=32)).strftime('%Y-%m-01'))
+                        ]"/>
+
+                <separator/>
+
+                <field name="start_datetime" string="Выбрать период (с / по)"/>
+
+                <group expand="0" string="Группировать по">
+                    <filter string="Дата проведения" name="group_by_date" context="{'group_by': 'start_datetime:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tennis_coach_analytics" model="ir.actions.act_window">
+        <field name="name">Статистика тренировок</field>
+        <field name="res_model">tennis.training</field>
+        <field name="view_mode">graph,pivot,kanban,list</field>
+        <field name="search_view_id" ref="view_tennis_training_search"/>
+
+        <field name="domain">[
+            ('tennis_coach_id.employee_id.user_id', '=', uid),
+            ('state', '=', 'done')
+        ]</field>
+
+        <field name="context">{
+            'search_default_current_month': 1
+        }</field>
+
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                У вас пока нет выполненных тренировок в выбранном периоде
+            </p>
+            <p>
+                Сюда попадают только завершенные занятия (в статусе "Выполнено").<br/>
+                • Чтобы посмотреть данные <strong>за все время</strong>, просто нажмите на крестик у фиолетового фильтра "Этот месяц" в панели поиска сверху.<br/>
+                • Чтобы выбрать кастомный интервал, используйте кнопку "Add Custom Filter" (Добавить кастомный фильтр).
+            </p>
+        </field>
+    </record>
+
+</odoo>

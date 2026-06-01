@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tennis_universal_report_wizard_form" model="ir.ui.view">
+        <field name="name">tennis.universal.report.wizard.form</field>
+        <field name="model">tennis.universal.report.wizard</field>
+        <field name="arch" type="xml">
+            <form> <field name="report_type" invisible="1"/>
+
+                <group>
+                    <group string="Временной диапазон">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group string="Область анализа">
+                        <field name="center_ids" widget="many2many_tags" options="{'no_create': True}" placeholder="Вся сеть центров"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_generate_report" string="Сформировать PDF" type="object" class="btn-primary"/>
+                    <button string="Отмена" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

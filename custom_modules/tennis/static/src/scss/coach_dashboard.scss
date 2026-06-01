@@ -1,0 +1,68 @@
+.o_dash_wrapper {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc !important; // Светлый минималистичный фон всей страницы
+
+    // Эффектные карточки KPI
+    .card {
+        border-radius: 16px !important;
+        background: #ffffff;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:hover {
+            transform: translateY(-5px); // Карточка плавно приподнимается
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        }
+    }
+
+    // Кастомный скроллбар для списка тренировок
+    .training_list_scroll {
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        &::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+            &:hover { background: #94a3b8; }
+        }
+    }
+
+    // Элемент списка тренировок
+    .training_item {
+        transition: background-color 0.2s ease;
+        border-color: #f1f5f9 !important;
+
+        &:last-child {
+            border-bottom: none !important;
+        }
+
+        &:hover {
+            background-color: #f8fafc; // Подсветка строки при наведении
+        }
+    }
+
+    // Мягкие пастельные цвета для бейджей (Bootstrap альтернатива)
+    .bg-success-light {
+        background-color: #dcfce7 !important;
+        color: #15803d !important;
+    }
+
+    .bg-info-light {
+        background-color: #e0f2fe !important;
+        color: #0369a1 !important;
+    }
+
+    .bg-warning-light {
+        background-color: #fef3c7 !important;
+        color: #b45309 !important;
+    }
+
+    .time_badge {
+        background-color: #f1f5f9 !important;
+        border: 1px solid #e2e8f0;
+    }
+}

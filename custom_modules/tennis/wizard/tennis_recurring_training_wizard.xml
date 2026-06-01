@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_tennis_recurring_wizard_form" model="ir.ui.view">
+        <field name="name">tennis.recurring.wizard.form</field>
+        <field name="model">tennis.recurring.training</field>
+        <field name="arch" type="xml">
+            <form string="Генератор регулярных тренировок">
+                <header>
+                    <button string="Сгенерировать расписание" name="action_generate_series" type="object"
+                            class="btn-primary oe_highlight"/>
+                    <button string="Отмена" class="btn-secondary" special="cancel"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title mb-4">
+                        <h1>Календарное планирование серии</h1>
+                        <p class="text-muted">Заполните параметры для автоматического создания повторяющихся занятий</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 border-end">
+                            <h5 class="fw-bold text-primary mb-3">
+                                <i class="fa fa-info-circle me-2"/>Основная информация
+                            </h5>
+                            <group class="mt-0">
+                                <field name="name" string="Название серии" placeholder="Например: Группа А — Понедельник/Среда"/>
+                                <field name="center_id" string="Теннисный центр" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="court" string="Корт" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="tennis_coach_id" string="Тренер" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="training_type" string="Тип занятия"/>
+                                <field name="client_id" string="Основной клиент" options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                        </div>
+
+                        <div class="col-md-6 ps-md-4">
+                            <h5 class="fw-bold text-success mb-3">
+                                <i class="fa fa-calendar me-2"/>Период и тайминг
+                            </h5>
+                            <group class="mt-0">
+                                <field name="date_from" string="Дата начала серии"/>
+                                <field name="date_to" string="Дата окончания серии"/>
+                                <label for="duration" string="Длительность занятия"/>
+                                <div class="o_row">
+                                    <field name="duration" widget="float_time" class="oe_inline"/>
+                                    <span class="text-muted">ч.</span>
+                                </div>
+                            </group>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
+                            <i class="fa fa-clock-o me-2"/>Выбор дней недели и времени занятий
+                        </h5>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded border shadow-sm" style="background-color: #f8fafc; opacity: 1 !important;">
+                                    <span class="fw-bold text-dark fs-6">Понедельник</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <field name="mo" class="m-0" modifiers="{}" readonly="0"/>
+                                        <field name="mo_time" widget="float_time" placeholder="00:00" invisible="not mo" class="oe_inline m-0" readonly="0"/>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded border shadow-sm" style="background-color: #f8fafc; opacity: 1 !important;">
+                                    <span class="fw-bold text-dark fs-6">Вторник</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <field name="tu" class="m-0" readonly="0"/>
+                                        <field name="tu_time" widget="float_time" placeholder="00:00" invisible="not tu" class="oe_inline m-0" readonly="0"/>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded border shadow-sm" style="background-color: #f8fafc; opacity: 1 !important;">
+                                    <span class="fw-bold text-dark fs-6">Среда</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <field name="wen" class="m-0" readonly="0"/>
+                                        <field name="wen_time" widget="float_time" placeholder="00:00" invisible="not wen" class="oe_inline m-0" readonly="0"/>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded border shadow-sm" style="background-color: #f8fafc; opacity: 1 !important;">
+                                    <span class="fw-bold text-dark fs-6">Четверг</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <field name="th" class="m-0" readonly="0"/>
+                                        <field name="th_time" widget="float_time" placeholder="00:00" invisible="not th" class="oe_inline m-0" readonly="0"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded border shadow-sm" style="background-color: #f8fafc; opacity: 1 !important;">
+                                    <span class="fw-bold text-dark fs-6">Пятница</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <field name="fr" class="m-0" readonly="0"/>
+                                        <field name="fr_time" widget="float_time" placeholder="00:00" invisible="not fr" class="oe_inline m-0" readonly="0"/>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded border shadow-sm" style="background-color: #f0fdfa; border-color: #99f6e4 !important; opacity: 1 !important;">
+                                    <span class="fw-bold text-info fs-6">Суббота</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <field name="sat" class="m-0" readonly="0"/>
+                                        <field name="sat_time" widget="float_time" placeholder="00:00" invisible="not sat" class="oe_inline m-0" readonly="0"/>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded border shadow-sm" style="background-color: #fef2f2; border-color: #fecaca !important; opacity: 1 !important;">
+                                    <span class="fw-bold text-danger fs-6">Воскресенье</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <field name="sun" class="m-0" readonly="0"/>
+                                        <field name="sun_time" widget="float_time" placeholder="00:00" invisible="not sun" class="oe_inline m-0" readonly="0"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

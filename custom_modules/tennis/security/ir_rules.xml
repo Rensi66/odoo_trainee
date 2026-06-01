@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="tennis_center_owner_rule" model="ir.rule">
+        <field name="name">Rule for center owner</field>
+        <field name="model_id" ref="model_tennis_center"/>
+        <field name="domain_force">
+            [('owner_id', '=', user.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_owner'))]"/>
+    </record>
+
+    <record id="rule_tennis_partner_owner_real_clients" model="ir.rule">
+        <field name="name">Владелец видит только клиентов своих центров</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_owner'))]"/>
+        <field name="domain_force">[
+            '|',
+            ('is_tennis_client', '=', False),
+            '|',
+            ('id', '=', user.partner_id.id),
+            '|',
+            ('training_ids.center_id', 'in', user.center_ids.ids),
+            ('training_ids', '=', False)
+        ]</field>
+    </record>
+
+    <record id="tennis_training_owner_rule" model="ir.rule">
+        <field name="name">Rule for training owner</field>
+        <field name="model_id" ref="model_tennis_training"/>
+        <field name="domain_force">
+            [('center_id', 'in', user.center_ids.ids)]
+        </field>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_owner'))]"/>
+    </record>
+
+
+
+    <record id="tennis_center_manager_rule" model="ir.rule">
+        <field name="name">Rule for center manager</field>
+        <field name="model_id" ref="model_tennis_center"/>
+        <field name="domain_force">
+            [('manager_id', '=', user.employee_id.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_manager'))]"/>
+    </record>
+
+    <record id="tennis_training_manager_rule" model="ir.rule">
+        <field name="name">Rule for training manager</field>
+        <field name="model_id" ref="model_tennis_training"/>
+        <field name="domain_force">
+            [('center_id', '=', user.employee_id.center_id.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_manager'))]"/>
+    </record>
+
+    <record id="tennis_coach_manager_rule" model="ir.rule">
+        <field name="name">Rule for coach manager</field>
+        <field name="model_id" ref="model_tennis_coach"/>
+        <field name="domain_force">
+            [('employee_id.center_id', '=', user.employee_id.center_id.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_manager'))]"/>
+    </record>
+
+    <record id="rule_tennis_partner_manager_real_clients" model="ir.rule">
+        <field name="name">Менеджер видит только реальных клиентов своего центра</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_manager'))]"/>
+        <field name="domain_force">[
+            '|',
+            ('is_tennis_client', '=', False),
+            '|',
+            ('id', '=', user.partner_id.id),
+            '|',
+            ('training_ids.center_id', '=', user.employee_id.center_id.id),
+            ('training_ids', '=', False)
+        ]</field>
+    </record>
+
+
+    <record id="tennis_training_coach_rule" model="ir.rule">
+        <field name="name">Rule for training coach</field>
+        <field name="model_id" ref="model_tennis_training"/>
+        <field name="domain_force">
+            [('center_id', '=', user.employee_id.center_id.id),
+             ('tennis_coach_id.employee_id', '=', user.employee_id.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_coach'))]"/>
+    </record>
+
+    <record id="tennis_coach_coach_rule" model="ir.rule">
+        <field name="name">Rule for coach coach</field>
+        <field name="model_id" ref="model_tennis_coach"/>
+        <field name="domain_force">
+            [('employee_id', '=', user.employee_id.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_coach'))]"/>
+    </record>
+
+    <record id="rule_tennis_partner_coach_real_clients" model="ir.rule">
+        <field name="name">Тренер видит только своих личных клиентов</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="groups" eval="[(4, ref('tennis.group_tennis_coach'))]"/>
+        <field name="domain_force">[
+            '|',
+            ("is_tennis_client", "=", False),
+            '|',
+            ('id', '=', user.partner_id.id),
+            '&amp;',
+            ('training_ids.tennis_coach_id.employee_id', '=', user.employee_id.id),
+            ('training_ids.state', '=', 'done')
+            ]
+        </field>
+    </record>
+</odoo>
+

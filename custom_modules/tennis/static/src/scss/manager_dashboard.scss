@@ -1,0 +1,29 @@
+.o_tennis_dashboard {
+    background-color: #f4f6f9;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+
+    .custom-kpi-card {
+        background-color: #ffffff;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+        }
+    }
+
+    .table {
+        th {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-uppercase: uppercase;
+            letter-spacing: 0.5px;
+            color: #555;
+        }
+
+        td {
+            padding: 12px 8px;
+        }
+    }
+}з
