@@ -3,6 +3,7 @@ access_tennis_training_owner,tennis.training.owner.access,model_tennis_training,
 access_tennis_center_owner,tennis.center.owner.access,model_tennis_center,tennis.group_tennis_owner,1,1,1,1
 access_tennis_coach_owner,tennis.coach.owner.access,model_tennis_coach,tennis.group_tennis_owner,1,1,1,1
 access_tennis_universal_report_wizard_owner,tennis.universal.report.wizard.owner.access,model_tennis_universal_report_wizard,tennis.group_tennis_owner,1,1,1,1
+access_tennis_recurring_training_owner,tennis.recurring.training.owner.access,model_tennis_recurring_training,tennis.group_tennis_owner,1,1,1,1
 
 access_tennis_center_manager,tennis.center.manager.access,model_tennis_center,tennis.group_tennis_manager,1,0,0,0
 access_tennis_coach_manager,tennis.coach.manager.access,model_tennis_coach,tennis.group_tennis_manager,1,1,1,1

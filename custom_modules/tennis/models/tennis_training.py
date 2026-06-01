@@ -39,7 +39,13 @@ class TennisTraining(models.Model):
     price_total = fields.Monetary(string="Total Price", compute="_get_price", store=True, aggregator=False)
     display_coach = fields.Char(string="Coach", compute="_compute_display_fields")
     display_clients = fields.Char(string="Clients", compute="_compute_display_fields")
+    display_name_calendar = fields.Char(compute="_compute_display_name_calendar")
     is_reminder_sent = fields.Boolean(string="Reminder Sent", default=False)
+    is_own_training = fields.Boolean(
+        compute="_compute_own_training",
+        search="_search_own_training",
+        string="Is Own Training"
+    )
 
     busy_courts_ids = fields.Many2many("tennis.training", compute="_compute_busy_courts", string="Busy Courts")
     event_id = fields.Many2one('calendar.event', string='Event', required=True, ondelete='cascade')
@@ -48,29 +54,88 @@ class TennisTraining(models.Model):
     center_id = fields.Many2one("tennis.center", required=True, default=lambda self: self.env.user.employee_id.center_id.id, ondelete="cascade")
     currency_id = fields.Many2one("res.currency", string="Currency", default=lambda self: self.env.company.currency_id)
 
+    @api.depends('is_own_training', 'training_type', 'display_coach')
+    def _compute_display_name_calendar(self):
+        for record in self:
+            if record.is_own_training:
+                # Если своя — пишем как есть: "Групповая (Имя Тренера)" или оригинальное имя
+                type_label = dict(self._fields['training_type'].selection).get(record.training_type, '')
+                record.display_name_calendar = f"{type_label} — {record.display_coach}"
+            else:
+                # Если чужая — жесткая заглушка для сетки календаря
+                record.display_name_calendar = "Занято (Чужая тренировка)"
+
+    @api.depends("tennis_coach_id")
+    def _compute_own_training(self):
+        is_owner = self.env.user.has_group("tennis.group_tennis_owner")
+        is_manager = self.env.user.has_group("tennis.group_tennis_manager")
+
+        # Заранее находим ID карточки тренера, которая принадлежит текущему пользователю
+        current_coach = self.env["tennis.coach"].search([
+            ("employee_id", "=", self.env.user.employee_id.id)
+        ], limit=1)
+        current_coach_id = current_coach.id if current_coach else False
+
+        for record in self:
+            # Защита от NewId при создании записи в календаре
+            if not record.tennis_coach_id:
+                record.is_own_training = True
+                continue
+
+            # Сравниваем ID карточек тренеров напрямую — это не требует прав на модель hr.employee!
+            if is_owner or is_manager or record.tennis_coach_id.id == current_coach_id:
+                record.is_own_training = True
+            else:
+                record.is_own_training = False
+
+    def _search_own_training(self, operator, value):
+        if operator not in ('=', '!='):
+            raise ValueError("Unsupported operator for is_own_training search")
+
+        # Определяем, ищем мы "свои" (True) или "чужие" (False)
+        positive = (operator == '=' and value) or (operator == '!=' and not value)
+
+        is_owner = self.env.user.has_group("tennis.group_tennis_owner")
+        is_manager = self.env.user.has_group("tennis.group_tennis_manager")
+
+        # Менеджеры и владельцы видят вообще всё как "своё"
+        if is_owner or is_manager:
+            return [] if positive else [('id', '=', False)]
+
+        # Для обычного тренера ищем его карточку
+        current_coach = self.env["tennis.coach"].search([
+            ("employee_id", "=", self.env.user.employee_id.id)
+        ], limit=1)
+
+        if current_coach:
+            return [('tennis_coach_id', '=', current_coach.id)] if positive else [
+                ('tennis_coach_id', '!=', current_coach.id)]
+
+        # Если это какой-то левый юзер без карточки тренера
+        return [('id', '=', False)] if positive else []
+
+    @api.depends('tennis_coach_id', 'client_ids', 'is_own_training')
+    def _compute_display_fields(self):
+        """Динамически скрывает данные чужих тренировок от тренеров"""
+        for record in self:
+            if record.is_own_training:
+                # Если тренировка наша — берем оригинальные данные (с проверкой на пустоту)
+                record.display_coach = record.tennis_coach_id.name if record.tennis_coach_id else ""
+                record.display_clients = ", ".join(record.client_ids.mapped("name")) if record.client_ids else ""
+            else:
+                # Читаем имя тренера через sudo(), так как это чужая запись
+                sudo_record = record.sudo()
+                coach_name = sudo_record.tennis_coach_id.name if sudo_record.tennis_coach_id else "Чужой тренер"
+
+                record.display_coach = f"Занято"
+                record.display_clients = "Конфиденциально"
+
     @api.constrains("client_ids")
     def _check_balance(self):
         for record in self:
             for client in record.client_ids:
                 if client.tennis_balance < 0:
                     raise ValidationError(f"Client {client.name} has negative balance")
-
-    @api.depends('tennis_coach_id', 'client_ids')
-    def _compute_display_fields(self):
-        """Динамически скрывает данные чужих тренировок от тренеров"""
-        is_owner = self.env.user.has_group("tennis.group_tennis_owner")
-        is_manager = self.env.user.has_group("tennis.group_tennis_manager")
-        current_employee_id = self.env.user.employee_id.id
-
-        for record in self:
-            # Если смотрит владелец, менеджер ИЛИ сам тренер этой тренировки — показываем всё
-            if is_owner or is_manager or record.tennis_coach_id.employee_id.id == current_employee_id:
-                record.display_coach = record.tennis_coach_id.name
-                record.display_clients = ", ".join(record.client_ids.mapped("name"))
-            else:
-                # Для чужих тренеров маскируем данные
-                record.display_coach = "Coach"
-                record.display_clients = "Client"
 
     @api.depends("start_datetime", "court", "center_id")
     def _compute_busy_courts(self):

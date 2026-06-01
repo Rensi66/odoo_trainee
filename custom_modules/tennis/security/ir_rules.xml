@@ -82,8 +82,7 @@
         <field name="name">Rule for training coach</field>
         <field name="model_id" ref="model_tennis_training"/>
         <field name="domain_force">
-            [('center_id', '=', user.employee_id.center_id.id),
-             ('tennis_coach_id.employee_id', '=', user.employee_id.id)]
+            [('center_id', '=', user.employee_id.center_id.id)]
         </field>
         <field name="groups" eval="[(4, ref('tennis.group_tennis_coach'))]"/>
     </record>
@@ -92,7 +91,7 @@
         <field name="name">Rule for coach coach</field>
         <field name="model_id" ref="model_tennis_coach"/>
         <field name="domain_force">
-            [('employee_id', '=', user.employee_id.id)]
+            [('employee_id.center_id', '=', user.employee_id.center_id.id)]
         </field>
         <field name="groups" eval="[(4, ref('tennis.group_tennis_coach'))]"/>
     </record>
