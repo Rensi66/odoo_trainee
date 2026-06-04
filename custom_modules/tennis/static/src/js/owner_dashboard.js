@@ -1,11 +1,9 @@
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-// В Odoo 18 все хуки и компоненты OWL импортируются строго отсюда:
 import { Component, useState, onWillStart } from "@odoo/owl";
 
 class TennisOwnerDashboard extends Component {
     setup() {
-        // Проверенный сервис ORM для Odoo 18
         this.orm = useService("orm");
         this.action = useService("action");
 
@@ -45,7 +43,7 @@ class TennisOwnerDashboard extends Component {
 
     openCreateCenterWizard() {
         this.action.doAction({
-            name: "Добавить новый теннисный центр",
+            name: "Add a New Tennis Center",
             type: "ir.actions.act_window",
             res_model: "tennis.center",
             views: [[false, "form"]],
@@ -55,7 +53,7 @@ class TennisOwnerDashboard extends Component {
 
     openAllClientsView() {
         this.action.doAction({
-            name: "Теннисная клиентская база",
+            name: "Tennis Client Base",
             type: "ir.actions.act_window",
             res_model: "res.partner",
             domain: [["is_tennis_client", "=", true]],
@@ -66,7 +64,7 @@ class TennisOwnerDashboard extends Component {
 
     openGlobalTrainings() {
         this.action.doAction({
-            name: "Все тренировки сети",
+            name: "All Network Workouts",
             type: "ir.actions.act_window",
             res_model: "tennis.training",
             views: [[false, "calendar"], [false, "list"]],
@@ -74,41 +72,39 @@ class TennisOwnerDashboard extends Component {
         });
     }
 
-    // ==== ГЛОБАЛЬНЫЕ ИНСТРУМЕНТЫ (ОТЧЕТЫ ЧЕРЕЗ ОДИН ВИЗАРД) ====
     openFinancialReport() {
         this.action.doAction({
-            name: "Выгрузка сводного P&L сети",
+            name: "Export of Consolidated Network P&L",
             type: "ir.actions.act_window",
             res_model: "tennis.universal.report.wizard",
             views: [[false, "form"]],
             target: "new",
-            context: { 'default_report_type': 'pnl' } // Изменили тут
+            context: { "default_report_type": "pnl" }
         });
     }
 
     openPayrollReport() {
         this.action.doAction({
-            name: "Ведомость выплат сотрудникам",
+            name: "Employee Payroll Register",
             type: "ir.actions.act_window",
             res_model: "tennis.universal.report.wizard",
             views: [[false, "form"]],
             target: "new",
-            context: { 'default_report_type': 'payroll' } // Изменили тут
+            context: { "default_report_type": "payroll" }
         });
     }
 
     openCourtAnalysisReport() {
         this.action.doAction({
-            name: "Анализ эффективности корт-часа",
+            name: "Analysis of Court-Hour Efficiency",
             type: "ir.actions.act_window",
             res_model: "tennis.universal.report.wizard",
             views: [[false, "form"]],
             target: "new",
-            context: { 'default_report_type': 'court_analysis' } // Изменили тут
+            context: { "default_report_type": "court_analysis" }
         });
     }
 }
 
-// Привязываем шаблон и регистрируем в Odoo 18
 TennisOwnerDashboard.template = "tennis.OwnerDashboard";
 registry.category("actions").add("tennis_owner_dashboard", TennisOwnerDashboard);

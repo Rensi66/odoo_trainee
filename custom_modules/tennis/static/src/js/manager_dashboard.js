@@ -5,21 +5,24 @@ import { useService } from "@web/core/utils/hooks";
 
 export class TennisManagerDashboard extends Component {
     setup() {
-        this.actionService = useService("action"); // Подключаем сервис переходов Odoo
+        this.actionService = useService("action");
 
         this.state = useState({
-            metrics: { approvals: 0, occupancy: "0%", new_clients: 0, revenue: "0 ₽" },
+            metrics: { approvals: 0, occupancy: "0%", new_clients: 0, revenue: "0 $" },
             debtors: [],
             today_trainings: []
         });
 
         onWillStart(async () => {
-            const data = await rpc("/web/dataset/call_kw/res.users/get_manager_dashboard_data", {
-                model: "res.users",
+            const centerId = this.props.action?.params?.center_id || false;
+
+            const data = await rpc("/web/dataset/call_kw/tennis.center/get_manager_dashboard_data", {
+                model: "tennis.center",
                 method: "get_manager_dashboard_data",
-                args: [],
+                args: [centerId],
                 kwargs: {},
             });
+
             if (data) {
                 Object.assign(this.state, data);
             }
@@ -30,7 +33,6 @@ export class TennisManagerDashboard extends Component {
         window.location.href = `tel:${phone}`;
     }
 
-    // Метод для открытия карточки клиента
     openClient(clientId) {
         this.actionService.doAction({
             type: "ir.actions.act_window",
@@ -41,7 +43,6 @@ export class TennisManagerDashboard extends Component {
         });
     }
 
-    // Метод для открытия карточки тренировки
     openTraining(trainingId) {
         this.actionService.doAction({
             type: "ir.actions.act_window",

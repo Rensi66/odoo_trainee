@@ -5,8 +5,8 @@
 
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h2 class="fw-bold text-dark mb-1">Обзор сети центров</h2>
-                    <p class="text-muted small mb-0">Оперативная аналитика и пульс вашего бизнеса</p>
+                    <h2 class="fw-bold text-dark mb-1">Overview of the Network of Centers</h2>
+                    <p class="text-muted small mb-0">Operational Analytics and the Pulse of Your Business</p>
                 </div>
             </div>
 
@@ -14,7 +14,7 @@
                 <div class="col-12 col-sm-6 col-xl-3">
                     <div class="card h-100 border-0 shadow-sm p-3 dashboard-card">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <span class="text-muted fw-semibold small">Всего центров</span>
+                            <span class="text-muted fw-semibold small">Total Centers</span>
                             <span class="card-icon bg-primary-soft text-primary"><i class="fa fa-building-o"/></span>
                         </div>
                         <h3 class="fw-bold mb-1 text-dark"><t t-esc="state.data.kpis.centers.value"/></h3>
@@ -22,11 +22,10 @@
                     </div>
                 </div>
 
-                <!-- Карточка выручки (с динамическим цветом тренда) -->
                 <div class="col-12 col-sm-6 col-xl-3">
                     <div class="card h-100 border-0 shadow-sm p-3 dashboard-card">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <span class="text-muted fw-semibold small">Общая выручка</span>
+                            <span class="text-muted fw-semibold small">Total Revenue</span>
                             <span class="card-icon bg-success-soft text-success"><i class="fa fa-money"/></span>
                         </div>
                         <h3 class="fw-bold mb-1 text-dark"><t t-esc="state.data.kpis.revenue.value"/></h3>
@@ -40,7 +39,7 @@
                 <div class="col-12 col-sm-6 col-xl-3">
                     <div class="card h-100 border-0 shadow-sm p-3 dashboard-card">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <span class="text-muted fw-semibold small">Активные клиенты</span>
+                            <span class="text-muted fw-semibold small">Active Clients</span>
                             <span class="card-icon bg-info-soft text-info"><i class="fa fa-users"/></span>
                         </div>
                         <h3 class="fw-bold mb-1 text-dark"><t t-esc="state.data.kpis.clients.value"/></h3>
@@ -48,7 +47,6 @@
                     </div>
                 </div>
 
-                <!-- ИЗМЕНЕНИЕ 1: Карточка загрузки теперь кликабельная кнопка (Drill-down на календарь) -->
                 <div class="col-12 col-sm-6 col-xl-3">
                     <div class="card h-100 border-0 shadow-sm p-3 dashboard-card cursor-pointer"
                          t-on-click="openGlobalTrainings"
@@ -56,21 +54,20 @@
                          onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 .5rem 1rem rgba(0,0,0,.08)'"
                          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <span class="text-muted fw-semibold small text-start">Загрузка сети (Расписание)</span>
+                            <span class="text-muted fw-semibold small text-start">Network Load (Schedule)</span>
                             <span class="card-icon bg-warning-soft text-warning"><i class="fa fa-calendar-check-o"/></span>
                         </div>
                         <h3 class="fw-bold mb-1 text-dark text-start"><t t-esc="state.data.kpis.occupancy.value"/></h3>
-                        <span class="small text-muted fw-medium text-start"><i class="fa fa-clock-o me-1"/> Открыть общий календарь</span>
+                        <span class="small text-muted fw-medium text-start"><i class="fa fa-clock-o me-1"/>Open Shared Calendar</span>
                     </div>
                 </div>
             </div>
 
             <div class="row g-4 mb-4">
-                <!-- Таблица филиалов -->
                 <div class="col-12 col-lg-7">
                     <div class="card border-0 shadow-sm p-4 h-100 bg-white content-card">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h5 class="fw-bold text-dark m-0">Показатели по филиалам</h5>
+                            <h5 class="fw-bold text-dark m-0">Indicators by branches</h5>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0 custom-dashboard-table">
@@ -78,8 +75,8 @@
                                     <tr class="text-muted small uppercase">
                                         <th>Центр</th>
                                         <th>Выручка</th>
-                                        <th style="width: 35%;">Загрузка</th>
-                                        <th class="text-end">Динамика</th>
+                                        <th style="width: 35%;">Loading</th>
+                                        <th class="text-end">Dynamics</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -113,14 +110,12 @@
                     </div>
                 </div>
 
-                <!-- Лента событий (С фиксом точки) -->
                 <div class="col-12 col-lg-5">
                     <div class="card border-0 shadow-sm p-4 h-100 bg-white content-card">
-                        <h5 class="fw-bold text-dark mb-4">Операционные события (Сеть)</h5>
+                        <h5 class="fw-bold text-dark mb-4">Operational Events (Network)</h5>
                         <div class="dashboard-timeline pr-2">
                             <t t-foreach="state.data.events" t-as="event" t-key="event_index">
                                 <div class="timeline-item d-flex gap-3 mb-3 pb-3 border-bottom-dashed align-items-center">
-                                    <!-- ИЗМЕНЕНИЕ 2: Точка завязана на валидные bg-классы из бэкенда (success, danger, primary, warning) -->
                                     <div t-attf-class="rounded-circle bg-#{event.type}" style="width: 12px; height: 12px; flex-shrink: 0; border: 2px solid white; box-shadow: 0 0 0 2px rgba(0,0,0,0.05);"/>
                                     <div class="flex-grow-1">
                                         <div class="fw-semibold text-dark small"><t t-esc="event.title"/></div>
@@ -135,54 +130,49 @@
             </div>
 
             <div class="card border-0 shadow-sm p-4 bg-white content-card">
-                <h5 class="fw-bold text-dark mb-3">Глобальные инструменты</h5>
+                <h5 class="fw-bold text-dark mb-3">Global Tools</h5>
                 <div class="row g-3">
-                    <!-- 1. Сводный P&L сети -->
                     <div class="col-12 col-sm-6 col-md-3">
                         <button class="btn btn-action-card w-100 p-3 text-start d-flex align-items-center gap-3 border" t-on-click="openFinancialReport">
                             <span class="action-icon bg-primary-soft text-primary"><i class="fa fa-file-pdf-o fa-lg"/></span>
                             <div>
-                                <div class="fw-bold small text-dark">Сводный P&amp;L сети</div>
-                                <div class="text-muted extra-small">Выгрузка прибылей и убытков</div>
+                                <div class="fw-bold small text-dark">Consolidated Network P&amp;L</div>
+                                <div class="text-muted extra-small">Profit and Loss Exportв</div>
                             </div>
                         </button>
                     </div>
 
-                    <!-- 2. Ведомость выплат (ИСПРАВЛЕНО НА openPayrollReport) -->
                     <div class="col-12 col-sm-6 col-md-3">
                         <button class="btn btn-action-card w-100 p-3 text-start d-flex align-items-center gap-3 border" t-on-click="openPayrollReport">
                             <span class="action-icon bg-success-soft text-success"><i class="fa fa-calculator fa-lg"/></span>
                             <div>
-                                <div class="fw-bold small text-dark">Ведомость выплат</div>
-                                <div class="text-muted extra-small">Роялти и бонусы тренеров</div>
+                                <div class="fw-bold small text-dark">Payment Register</div>
+                                <div class="text-muted extra-small">Coach Royalties and Bonuses</div>
                             </div>
                         </button>
                     </div>
 
-                    <!-- 3. Анализ корт-часа (ИСПРАВЛЕНО НА openCourtAnalysisReport) -->
                     <div class="col-12 col-sm-6 col-md-3">
                         <button class="btn btn-action-card w-100 p-3 text-start d-flex align-items-center gap-3 border" t-on-click="openCourtAnalysisReport">
                             <span class="action-icon bg-warning-soft text-warning"><i class="fa fa-pie-chart fa-lg"/></span>
                             <div>
-                                <div class="fw-bold small text-dark">Анализ корт-часа</div>
-                                <div class="text-muted extra-small">Маржинальность локаций</div>
+                                <div class="fw-bold small text-dark">Court hour analysis</div>
+                                <div class="text-muted extra-small">Location Profitability</div>
                             </div>
                         </button>
                     </div>
 
-                    <!-- 4. Добавить корт/центр -->
                     <div class="col-12 col-sm-6 col-md-3">
                         <button class="btn btn-action-card w-100 p-3 text-start d-flex align-items-center gap-3 border" t-on-click="openCreateCenterWizard">
                             <span class="action-icon bg-purple-soft text-purple" style="background-color: rgba(111, 66, 193, 0.1); color: #6f42c1;"><i class="fa fa-plus-circle fa-lg"/></span>
                             <div>
-                                <div class="fw-bold small text-dark">Добавить корт/центр</div>
-                                <div class="text-muted extra-small">Расширение теннисной сети</div>
+                                <div class="fw-bold small text-dark">Add Court/Center</div>
+                                <div class="text-muted extra-small">Expansion of the Tennis Network</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
-
         </div>
     </t>
 </templates>

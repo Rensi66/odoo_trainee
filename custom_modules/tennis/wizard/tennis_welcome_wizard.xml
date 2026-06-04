@@ -9,22 +9,22 @@
                 <div class="o_welcome_container" style="background-color: #f8f9fa; min-height: 100vh; padding: 40px 20px;">
 
                     <div class="text-center mb-5" style="margin-top: 50px;">
-                        <h1 style="font-weight: bold; color: #2C3E50; font-size: 3rem;">Добро пожаловать в World Of Tennis!</h1>
-                        <p class="text-muted" style="font-size: 1.4em;">Выберите вашу роль, чтобы настроить рабочее пространство</p>
+                        <h1 style="font-weight: bold; color: #2C3E50; font-size: 3rem;">Welcome to World of Tennis!</h1>
+                        <p class="text-muted" style="font-size: 1.4em;">Select your role to configure your workspace.</p>
                     </div>
 
                     <div class="row justify-content-center d-flex align-items-stretch" style="max-width: 1200px; margin: 0 auto;">
                         <div class="col-12 col-md-5 mb-4">
                             <div class="text-center p-5 border-0 rounded shadow-sm h-100 bg-white" style="border-radius: 20px !important;">
                                 <div style="font-size: 5rem;" class="mb-4">🏢</div>
-                                <h2 style="font-weight: 700; color: #34495E;">Владелец</h2>
+                                <h2 style="font-weight: 700; color: #34495E;">Owner</h2>
                                 <p class="text-muted" style="font-size: 1.1em; line-height: 1.6;">
-                                    Создайте сеть спортивных центров, настройте время работы и управляйте кортами.
+                                    Create a network of sports centers, set operating hours, and manage the courts.
                                 </p>
                                 <div class="mt-4">
-                                    <button name="action_become_owner"
+                                    <button name="button_become_owner"
                                             type="object"
-                                            string="Начать как владелец"
+                                            string="Start as an Owner"
                                             class="btn-primary btn-lg w-100"
                                             style="border-radius: 10px; padding: 15px; font-weight: bold;"/>
                                 </div>
@@ -34,14 +34,14 @@
                         <div class="col-12 col-md-5 mb-4">
                             <div class="text-center p-5 border-0 rounded shadow-sm h-100 bg-white" style="border-radius: 20px !important;">
                                 <div style="font-size: 5rem;" class="mb-4">🎾</div>
-                                <h2 style="font-weight: 700; color: #34495E;">Менеджер</h2>
+                                <h2 style="font-weight: 700; color: #34495E;">Manager</h2>
                                 <p class="text-muted" style="font-size: 1.1em; line-height: 1.6;">
-                                    Получили приглашение? Нажмите кнопку ниже, чтобы проверить входящие сообщения.
+                                    Received an invitation? Click the button below to check your inbox.
                                 </p>
                                 <div class="mt-4">
-                                    <button name="action_check_mail"
+                                    <button name="button_check_mail"
                                             type="object"
-                                            string="Посмотреть почту"
+                                            string="Check email"
                                             class="btn-secondary btn-lg w-100"
                                             style="border-radius: 10px; padding: 15px; font-weight: bold; background-color: #E5E7EB; color: #4B5563; border: none;"/>
                                 </div>

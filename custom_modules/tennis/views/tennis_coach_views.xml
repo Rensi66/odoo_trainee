@@ -4,11 +4,11 @@
         <field name="name">tennis.coach.form</field>
         <field name="model">tennis.coach</field>
         <field name="arch" type="xml">
-            <form string="Профиль тренера">
+            <form string="Coach Profile">
                 <sheet>
                     <div class="d-flex align-items-start gap-4 mb-4">
                         <div class="oe_avatar">
-                            <label for="employee_id" string="Фото сотрудника" class="oe_edit_only text-muted small"/>
+                            <label for="employee_id" string="Employee Photo" class="oe_edit_only text-muted small"/>
                             <field name="avatar_image"
                                    widget="image"
                                    class="bg-view"
@@ -17,15 +17,13 @@
 
                         <div class="w-100">
                             <div class="oe_title">
-                                <label for="employee_id" string="Сотрудник" class="text-muted small fw-bold text-uppercase"/>
+                                <label for="employee_id" string="Employee" class="text-muted small fw-bold text-uppercase"/>
                                 <h1>
                                     <field name="employee_id"
                                            options="{'no_create': True}"
-                                           placeholder="Выберите сотрудника..."
-                                           readonly="id != False"
-                                           groups="tennis.group_tennis_manager"/>
-
-                                    <field name="employee_id" readonly="1" groups="!tennis.group_tennis_manager"/>
+                                           placeholder="Select an employee..."
+                                           readonly="id"
+                                           domain="[('center_id', '=', False)]"/>
                                 </h1>
                             </div>
                         </div>
@@ -34,28 +32,26 @@
                     <div class="row border-top pt-3">
                         <div class="col-md-6 border-end">
                             <h5 class="fw-bold text-primary mb-3">
-                                <i class="fa fa-building me-2"/>Информация о центре
+                                <i class="fa fa-building me-2"/>Information about the Center
                             </h5>
 
                             <group class="mt-0">
                                 <field name="center_id"
                                        required="True"
                                        options="{'no_open': True, 'no_create': True}"
-                                       readonly="id != False"
-                                       groups="tennis.group_tennis_manager"/>
-
-                                <field name="center_id" readonly="1" options="{'no_open': True}" groups="!tennis.group_tennis_manager"/>
+                                       readonly="1"
+                                       force_save="1"/>
                             </group>
 
-                            <h5 class="fw-bold text-dark mb-3 mt-4">
-                                <i class="fa fa-address-book text-info me-2"/>Рабочие контакты
+                             <h5 class="fw-bold text-dark mb-3 mt-4">
+                                <i class="fa fa-address-book text-info me-2"/>Professional Contacts
                             </h5>
 
                             <div class="p-3 bg-white rounded border shadow-sm mb-3">
                                 <div class="d-flex align-items-center mb-3 pb-2 border-bottom">
                                     <i class="fa fa-phone fa-lg text-primary me-3" style="width: 20px;"/>
                                     <div class="d-flex flex-column w-100">
-                                        <span class="text-muted small fw-bold">Мобильный телефон</span>
+                                        <span class="text-muted small fw-bold">Mobile phone</span>
                                         <group class="m-0 p-0" col="1">
                                             <field name="work_phone" nolabel="1" class="text-dark fw-bold fs-5 p-0 m-0 border-0 bg-transparent"/>
                                         </group>
@@ -64,7 +60,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fa fa-envelope fa-lg text-info me-3" style="width: 20px;"/>
                                     <div class="d-flex flex-column w-100">
-                                        <span class="text-muted small fw-bold">E-mail адрес</span>
+                                        <span class="text-muted small fw-bold">E-mail address</span>
                                         <group class="m-0 p-0" col="1">
                                             <field name="work_email" nolabel="1" class="text-dark fw-bold fs-5 p-0 m-0 border-0 bg-transparent"/>
                                         </group>
@@ -74,21 +70,21 @@
 
                             <div class="text-muted small mt-3 p-3 bg-light rounded border border-start-3 border-start-info">
                                 <i class="fa fa-info-circle text-info me-1"/>
-                                Данные подтягиваются из системного профиля сотрудника. Изменение ставок мгновенно влияет на расчет стоимости новых создаваемых серий занятий.
+                                Data is pulled from the employee's system profile. Changes to rates instantly impact the cost calculation for newly created series of sessions.
                             </div>
                         </div>
 
                         <div class="col-md-6 ps-md-4" groups="tennis.group_tennis_coach">
                             <h5 class="fw-bold text-success mb-3">
-                                <i class="fa fa-money me-2"/>Ставки (Заполняются тренером)
+                                <i class="fa fa-money me-2"/>Rates (To be filled out by the coach)
                             </h5>
                             <field name="currency_id" invisible="1"/>
 
                             <div class="p-3 bg-light rounded border shadow-sm">
                                 <group class="m-0 p-0" col="1">
-                                    <field name="individual" widget="monetary" string="Индивидуальное занятие"/>
-                                    <field name="split" widget="monetary" string="Сплит-тренировка (2 чел.)"/>
-                                    <field name="group" widget="monetary" string="Групповое занятие"/>
+                                    <field name="individual" widget="monetary" string="Individual Training"/>
+                                    <field name="split" widget="monetary" string="Split Training (2 People)"/>
+                                    <field name="group" widget="monetary" string="Group Training"/>
                                 </group>
                             </div>
                         </div>
@@ -96,12 +92,12 @@
 
                     <div class="mt-4 border-top pt-3" groups="tennis.group_tennis_manager" invisible="not id">
                         <h5 class="fw-bold text-danger mb-3">
-                            <i class="fa fa-sliders me-2"/>Текущие утвержденные ставки тренера
+                            <i class="fa fa-sliders me-2"/>Current Approved Coach Rates
                         </h5>
                         <div class="row">
                             <div class="col-md-4 mb-2">
                                 <div class="p-3 border rounded text-center bg-white shadow-sm border-top-3 border-top-info">
-                                    <div class="text-muted small fw-bold mb-1">Индивидуальное</div>
+                                    <div class="text-muted small fw-bold mb-1">Individual</div>
                                     <group class="m-0 p-0" col="1">
                                         <field name="individual" readonly="1" widget="monetary" nolabel="1" class="fs-4 fw-bold text-dark text-center w-100"/>
                                     </group>
@@ -109,7 +105,7 @@
                             </div>
                             <div class="col-md-4 mb-2">
                                 <div class="p-3 border rounded text-center bg-white shadow-sm border-top-3 border-top-warning">
-                                    <div class="text-muted small fw-bold mb-1">Сплит</div>
+                                    <div class="text-muted small fw-bold mb-1">Split</div>
                                     <group class="m-0 p-0" col="1">
                                         <field name="split" readonly="1" widget="monetary" nolabel="1" class="fs-4 fw-bold text-dark text-center w-100"/>
                                     </group>
@@ -117,7 +113,7 @@
                             </div>
                             <div class="col-md-4 mb-2">
                                 <div class="p-3 border rounded text-center bg-white shadow-sm border-top-3 border-top-success">
-                                    <div class="text-muted small fw-bold mb-1">Групповое</div>
+                                    <div class="text-muted small fw-bold mb-1">Group</div>
                                     <group class="m-0 p-0" col="1">
                                         <field name="group" readonly="1" widget="monetary" nolabel="1" class="fs-4 fw-bold text-dark text-center w-100"/>
                                     </group>
@@ -136,7 +132,7 @@
         <field name="model_id" ref="tennis.model_tennis_coach"/>
         <field name="state">code</field>
         <field name="code">
-            action = model.open_coach_form()
+            action = model.action_open_coach_form()
         </field>
     </record>
 </odoo>

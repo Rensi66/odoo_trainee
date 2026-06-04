@@ -11,8 +11,8 @@ access_tennis_training_manager,tennis.training.manager.access,model_tennis_train
 access_tennis_recurring_training_manager,tennis.recurring.training.manager.access,model_tennis_recurring_training,tennis.group_tennis_manager,1,1,1,1
 
 access_tennis_center_coach,tennis.center.coach.access,model_tennis_center,tennis.group_tennis_coach,1,0,0,0
-access_tennis_coach_coach,tennis.coach.coach.access,model_tennis_coach,tennis.group_tennis_coach,1,1,1,1
-access_tennis_coach_report,tennos.coach.report.access,model_tennis_coach_report,tennis.group_tennis_coach,1,1,1,0
+access_tennis_coach_coach,tennis.coach.coach.access,model_tennis_coach,tennis.group_tennis_coach,1,1,0,0
+access_tennis_coach_report,tennis.coach.report.access,model_tennis_coach_report,tennis.group_tennis_coach,1,1,1,0
 access_tennis_training_coach,tennis.training.coach.access,model_tennis_training,tennis.group_tennis_coach,1,1,1,0
 access_tennis_recurring_training_coach,tennis.recurring.training.coach.access,model_tennis_recurring_training,tennis.group_tennis_coach,1,1,1,1
 access_tennis_training_calendar_event_coach,calendar.event.coach.access,calendar.model_calendar_event,tennis.group_tennis_coach,1,1,1,1

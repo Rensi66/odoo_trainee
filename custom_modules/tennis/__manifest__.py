@@ -3,27 +3,33 @@
     "summary": "Module for management and analysis of sports centers",
     "version": "1.0",
     "depends": ["base",
+                "base_automation",
                 "calendar",
                 "hr",
-                "mail",
-                "base_automation"],
+                "mail"],
     "data": ["security/res_groups.xml",
              "security/ir.model.access.csv",
+             "security/ir_rules.xml",
+
+             "data/tennis_training_cron.xml",
+
              "wizard/tennis_welcome_wizard.xml",
-             "views/tennis_coach_views.xml",
-             "views/res_partner.xml",
-             "views/tennis_training_coach_statistics.xml",
              "wizard/tennis_recurring_training_wizard.xml",
              "wizard/tennis_report_wizard_view.xml",
-             "views/tennis_training_views.xml",
-             "views/menus.xml",
+
+             "views/res_partner.xml",
              "views/tennis_center_views.xml",
-             "security/ir_rules.xml",
-             "data/tennis_training_cron.xml",
+             "views/tennis_coach_views.xml",
+
+             "views/tennis_training_coach_statistics.xml",
+             "views/tennis_training_views.xml",
+
+             "views/menus.xml",
+
              "report/tennis_court_analysis_report_views.xml",
              "report/tennis_payroll_report_views.xml",
-             "report/tennis_pnl_report_views.xml"
-            ],
+             "report/tennis_pnl_report_views.xml",
+             ],
     "assets": {
         "web.assets_backend": [
             "tennis/static/src/scss/owner_dashboard.scss",

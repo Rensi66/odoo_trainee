@@ -3,20 +3,20 @@
 import { Component, onWillStart, onMounted, useState, useRef } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { loadJS } from "@web/core/assets"; // Безопасный загрузчик скриптов Odoo
+import { loadJS } from "@web/core/assets";
 
 export class CoachDashboard extends Component {
     setup() {
         this.orm = useService("orm");
-        this.actionService = useService("action"); // ДОБАВЛЕНО: Сервис для переходов/экшенов Odoo
-        this.chartRef = useRef("coachChart"); // Привязка к canvas в XML
+        this.actionService = useService("action");
+        this.chartRef = useRef("coachChart");
 
         this.state = useState({
             coachName: "",
             kpi: {
                 total_trainings: 0,
                 total_hours: 0,
-                total_salary_formatted: "0 ₽"
+                total_salary_formatted: "0 $"
             },
             todayTrainings: [],
             chartData: { labels: [], values: [] }
@@ -24,7 +24,6 @@ export class CoachDashboard extends Component {
 
         onWillStart(async () => {
             await this.loadDashboardData();
-            // Гарантированно подгружаем библиотеку Chart.js перед тем, как компонент смонтируется
             await loadJS("/web/static/lib/Chart/Chart.js");
         });
 
@@ -41,10 +40,6 @@ export class CoachDashboard extends Component {
         this.state.chartData = data.chart_data;
     }
 
-    /**
-     * ДОБАВЛЕНО: Обработчик клика по карточке тренировки.
-     * @param {Object} training - Объект тренировки, переданный из шаблона
-     */
     onTrainingClick(training) {
         if (!training || !training.id) return;
 
@@ -52,8 +47,8 @@ export class CoachDashboard extends Component {
             type: "ir.actions.act_window",
             res_model: "tennis.training",
             res_id: training.id,
-            views: [[false, "form"]], // false автоматически откроет твою enriched-форму по приоритету
-            target: "current",       // Открываем в текущем окне, замещая дашборд (назад вернешься по хлебным крошкам)
+            views: [[false, "form"]],
+            target: "current",
         });
     }
 
@@ -68,10 +63,10 @@ export class CoachDashboard extends Component {
             data: {
                 labels: this.state.chartData.labels,
                 datasets: [{
-                    label: 'Заработок (₽)',
+                    label: "Earnings ($)",
                     data: this.state.chartData.values,
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderColor: "#10b981",
+                    backgroundColor: "rgba(16, 185, 129, 0.1)",
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4
@@ -79,8 +74,8 @@ export class CoachDashboard extends Component {
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Обязательно!
-                resizeDelay: 10, // Дает задержку на пересчет, убирая цикл растягивания
+                maintainAspectRatio: false,
+                resizeDelay: 10,
                 plugins: {
                     legend: { display: false },
                     tooltip: {
@@ -88,7 +83,7 @@ export class CoachDashboard extends Component {
                     }
                 },
                 scales: {
-                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    y: { beginAtZero: true, grid: { color: "#f1f5f9" } },
                     x: { grid: { display: false } }
                 }
             }

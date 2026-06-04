@@ -5,7 +5,7 @@
         <field name="model_id" ref="tennis.model_tennis_center"/>
         <field name="state">code</field>
         <field name="code">
-            action = model.action_check_role_and_open_view()
+            action = model.action_open_dashboard()
         </field>
     </record>
 

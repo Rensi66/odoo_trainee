@@ -7,17 +7,17 @@
             <form> <field name="report_type" invisible="1"/>
 
                 <group>
-                    <group string="Временной диапазон">
+                    <group string="Time Range">
                         <field name="date_from"/>
                         <field name="date_to"/>
                     </group>
-                    <group string="Область анализа">
-                        <field name="center_ids" widget="many2many_tags" options="{'no_create': True}" placeholder="Вся сеть центров"/>
+                    <group string="Area of Analysis">
+                        <field name="center_ids" widget="many2many_tags" options="{'no_create': True}" placeholder="The Entire Network of Centers"/>
                     </group>
                 </group>
                 <footer>
-                    <button name="action_generate_report" string="Сформировать PDF" type="object" class="btn-primary"/>
-                    <button string="Отмена" class="btn-secondary" special="cancel"/>
+                    <button name="button_generate_report" string="Generate PDF" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
         </field>

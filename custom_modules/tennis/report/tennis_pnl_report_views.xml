@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_report_pnl_pdf" model="ir.actions.report">
-        <field name="name">Сводный P&amp;L отчет</field>
+        <field name="name">Consolidated P&amp;L Report</field>
         <field name="model">tennis.universal.report.wizard</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">tennis.report_pnl_template</field>
@@ -14,18 +14,18 @@
             <t t-call="web.internal_layout">
                 <div class="page">
                     <div class="text-center mb-5">
-                        <h2>Сводный отчет о прибылях и убытках (P&amp;L)</h2>
-                        <h4>Период анализа: <t t-out="date_from"/> — <t t-out="date_to"/></h4>
+                        <h2>Consolidated Profit and Loss Statement (P&amp;L)</h2>
+                        <h4>Analysis Period: <t t-out="date_from"/> — <t t-out="date_to"/></h4>
                     </div>
 
                     <table class="table table-bordered table-striped">
                         <thead class="bg-200">
                             <tr>
-                                <th>Спортивный центр</th>
-                                <th class="text-center">Кол-во тренировок</th>
-                                <th class="text-right">Валовый сбор (клиенты)</th>
-                                <th class="text-right">Расходы (тренеры)</th>
-                                <th class="text-right">Чистая прибыль中心</th>
+                                <th>Sports Center</th>
+                                <th class="text-center">Number of trainings</th>
+                                <th class="text-right">Gross Receipts (Clients)</th>
+                                <th class="text-right">Expenses (Coaches)</th>
+                                <th class="text-right">Net profit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,7 +49,7 @@
                             </t>
                             <tr class="bg-100 font-weight-bold" style="border-top: 2px solid #000;">
                                 <td>ИТОГО ПО СЕТИ</td>
-                                <td class="text-center"><t t-out="sum(c['trainings_count'] for c in centers)"/></td>
+                                <td class="text-center"><t t-out="total_trainings"/></td>
                                 <td class="text-right">
                                     <span t-out="total_gross" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                                 </td>

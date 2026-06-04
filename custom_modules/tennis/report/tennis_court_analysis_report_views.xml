@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_report_court_analysis_pdf" model="ir.actions.report">
-        <field name="name">Анализ эффективности корт-часа</field>
+        <field name="name">Analysis of Court-Hour Efficiency</field>
         <field name="model">tennis.universal.report.wizard</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">tennis.report_court_analysis_template</field>
@@ -14,17 +14,17 @@
             <t t-call="web.internal_layout">
                 <div class="page">
                     <div class="text-center mb-5">
-                        <h2>Анализ эффективности использования корт-часов</h2>
-                        <h4>Период анализа: <t t-out="date_from"/> — <t t-out="date_to"/></h4>
+                        <h2>Analysis of Court-Hour Utilization Efficiency</h2>
+                        <h4>Analysis Period: <t t-out="date_from"/> — <t t-out="date_to"/></h4>
                     </div>
 
                     <table class="table table-bordered table-striped">
                         <thead class="bg-200">
                             <tr>
-                                <th>Теннисный корт</th>
-                                <th>Спортивный中心 (Филиал)</th>
-                                <th class="text-center">Кол-во оплаченных сессий (часов)</th>
-                                <th class="text-right">Сгенерированная выручка</th>
+                                <th>Tennis court</th>
+                                <th>Sports Center (Branch)</th>
+                                <th class="text-center">Number of Paid Sessions (Hours)</th>
+                                <th class="text-right">Generated Revenue</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,9 +41,9 @@
                                 </tr>
                             </t>
                             <tr class="bg-100 font-weight-bold" style="border-top: 2px solid #000;">
-                                <td colspan="2">ИТОГО ПО ВСЕМ КОРТАМ</td>
+                                <td colspan="2">TOTAL FOR ALL COURTS</td>
                                 <td class="text-center">
-                                    <t t-out="sum(c['hours_count'] for c in courts)"/>
+                                    <t t-out="total_hours"/>
                                 </td>
                                 <td class="text-right text-success" style="font-size: 16px;">
                                     <span t-out="total_revenue" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>

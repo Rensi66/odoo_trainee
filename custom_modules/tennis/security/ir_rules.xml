@@ -10,7 +10,7 @@
     </record>
 
     <record id="rule_tennis_partner_owner_real_clients" model="ir.rule">
-        <field name="name">Владелец видит только клиентов своих центров</field>
+        <field name="name">Rule for partner owner</field>
         <field name="model_id" ref="base.model_res_partner"/>
         <field name="groups" eval="[(4, ref('tennis.group_tennis_owner'))]"/>
         <field name="domain_force">[
@@ -63,7 +63,7 @@
     </record>
 
     <record id="rule_tennis_partner_manager_real_clients" model="ir.rule">
-        <field name="name">Менеджер видит только реальных клиентов своего центра</field>
+        <field name="name">Rule for partner manager</field>
         <field name="model_id" ref="base.model_res_partner"/>
         <field name="groups" eval="[(4, ref('tennis.group_tennis_manager'))]"/>
         <field name="domain_force">[
@@ -97,7 +97,7 @@
     </record>
 
     <record id="rule_tennis_partner_coach_real_clients" model="ir.rule">
-        <field name="name">Тренер видит только своих личных клиентов</field>
+        <field name="name">Rule for partner coach</field>
         <field name="model_id" ref="base.model_res_partner"/>
         <field name="groups" eval="[(4, ref('tennis.group_tennis_coach'))]"/>
         <field name="domain_force">[

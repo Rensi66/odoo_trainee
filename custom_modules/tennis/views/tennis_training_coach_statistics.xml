@@ -5,12 +5,12 @@
         <field name="name">tennis.training.stats.graph</field>
         <field name="model">tennis.training</field>
         <field name="arch" type="xml">
-            <graph string="Аналитика доходов" type="bar" stacked="0" sample="1">
+            <graph string="Revenue Analytics" type="bar" stacked="0" sample="1">
                 <field name="start_datetime" interval="month"/>
                 <field name="training_type"/>
 
-                <field name="price_coach" type="measure" string="Заработанные деньги"/>
-                <field name="duration" type="measure" string="Отработанные часы"/>
+                <field name="price_coach" type="measure" string="Earned Money"/>
+                <field name="duration" type="measure" string="Hours Worked"/>
             </graph>
         </field>
     </record>
@@ -19,7 +19,7 @@
         <field name="name">tennis.training.stats.pivot</field>
         <field name="model">tennis.training</field>
         <field name="arch" type="xml">
-            <pivot string="Сводная таблица" sample="1">
+            <pivot string="Summary Table" sample="1">
                 <field name="start_datetime" interval="month" type="row"/>
                 <field name="training_type" type="row"/>
 
@@ -33,11 +33,11 @@
         <field name="name">tennis.training.search</field>
         <field name="model">tennis.training</field>
         <field name="arch" type="xml">
-            <search string="Поиск и фильтры">
-                <field name="display_coach" string="Тренер"/>
+            <search string="Search and Filters">
+                <field name="display_coach" string="Court"/>
                 <field name="court"/>
 
-                <filter string="Этот месяц" name="current_month"
+                <filter string="This month" name="current_month"
                         domain="[
                             ('start_datetime', '&gt;=', context_today().strftime('%Y-%m-01')),
                             ('start_datetime', '&lt;', (context_today() + datetime.timedelta(days=32)).strftime('%Y-%m-01'))
@@ -45,17 +45,17 @@
 
                 <separator/>
 
-                <field name="start_datetime" string="Выбрать период (с / по)"/>
+                <field name="start_datetime" string="Select period (from / to)"/>
 
-                <group expand="0" string="Группировать по">
-                    <filter string="Дата проведения" name="group_by_date" context="{'group_by': 'start_datetime:month'}"/>
+                <group expand="0" string="Group by">
+                    <filter string="Date" name="group_by_date" context="{'group_by': 'start_datetime:month'}"/>
                 </group>
             </search>
         </field>
     </record>
 
     <record id="action_tennis_coach_analytics" model="ir.actions.act_window">
-        <field name="name">Статистика тренировок</field>
+        <field name="name">Training Statistics</field>
         <field name="res_model">tennis.training</field>
         <field name="view_mode">graph,pivot,kanban,list</field>
         <field name="search_view_id" ref="view_tennis_training_search"/>
@@ -71,12 +71,12 @@
 
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                У вас пока нет выполненных тренировок в выбранном периоде
+                You do not have any completed trainings in the selected period yet.
             </p>
             <p>
-                Сюда попадают только завершенные занятия (в статусе "Выполнено").<br/>
-                • Чтобы посмотреть данные <strong>за все время</strong>, просто нажмите на крестик у фиолетового фильтра "Этот месяц" в панели поиска сверху.<br/>
-                • Чтобы выбрать кастомный интервал, используйте кнопку "Add Custom Filter" (Добавить кастомный фильтр).
+                Only completed activities (with the status "Completed") appear here.<br/>
+                • To view the data <strong>of all time</strong>, simply click the small cross next to the purple "This Month" filter in the search bar at the top.<br/>
+                • To select a custom interval, use the "Add Custom Filter" button.
             </p>
         </field>
     </record>

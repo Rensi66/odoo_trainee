@@ -3,36 +3,36 @@
     <t t-name="tennis.CoachDashboard" owl="1">
         <div class="o_dash_wrapper p-4" style="background-color: #f8f9fa; min-height: 100vh;">
 
-            <div class="h2 mb-4">С возвращением, <t t-esc="state.coachName || 'Тренер'"/>! 👋</div>
+            <div class="h2 mb-4">Welcome back, <t t-esc="state.coachName || 'Coach'"/>! 👋</div>
 
             <div class="row mb-4">
                 <div class="col-12 col-md-4 mb-3 mb-md-0">
                     <div class="card p-3 shadow-sm border-0 h-100" style="transition: transform 0.2s; cursor: pointer;">
-                        <div class="text-muted small text-uppercase fw-bold">Тренировок в этом месяце</div>
+                        <div class="text-muted small text-uppercase fw-bold">Trainings this month</div>
                         <div class="h3 mb-0 mt-2 text-primary">
                             <t t-esc="state.kpi.total_trainings || 0"/>
                         </div>
-                        <div class="text-muted small mt-1">Выполненные занятия</div>
+                        <div class="text-muted small mt-1">Completed Lessons</div>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-4 mb-3 mb-md-0">
                     <div class="card p-3 shadow-sm border-0 h-100" style="transition: transform 0.2s; cursor: pointer;">
-                        <div class="text-muted small text-uppercase fw-bold">Отработано часов</div>
+                        <div class="text-muted small text-uppercase fw-bold">Hours Worked</div>
                         <div class="h3 mb-0 mt-2 text-success">
-                            <t t-esc="state.kpi.total_hours || 0"/> ч.
+                            <t t-esc="state.kpi.total_hours || 0"/> h.
                         </div>
-                        <div class="text-muted small mt-1">Общая выработка</div>
+                        <div class="text-muted small mt-1">Total Output</div>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-4 mb-3 mb-md-0">
                     <div class="card p-3 shadow-sm border-0 h-100" style="transition: transform 0.2s; cursor: pointer;">
-                        <div class="text-muted small text-uppercase fw-bold">Заработано за месяц</div>
+                        <div class="text-muted small text-uppercase fw-bold">Earned this month</div>
                         <div class="h3 mb-0 mt-2 text-dark fw-bold">
-                            <t t-esc="state.kpi.total_salary_formatted || '0 ₽'"/>
+                            <t t-esc="state.kpi.total_salary_formatted || '0 $'"/>
                         </div>
-                        <div class="text-success small mt-1">💸 Расчет по личной ставке</div>
+                        <div class="text-success small mt-1">💸 Calculation Based on Personal Rate</div>
                     </div>
                 </div>
             </div>
@@ -41,9 +41,9 @@
                 <div class="col-lg-8 col-12 mb-4 mb-lg-0">
                     <div class="card p-4 shadow-sm border-0 h-100">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="mb-0 fw-bold">План на сегодня</h4>
+                            <h4 class="mb-0 fw-bold">Plan for Today</h4>
                             <span class="badge bg-success-light text-success px-3 py-2 rounded">
-                                <t t-esc="state.todayTrainings.length || 0"/> занятий
+                                <t t-esc="state.todayTrainings.length || 0"/> trainings
                             </span>
                         </div>
 
@@ -91,8 +91,8 @@
                             <div class="text-center p-5 text-muted my-auto">
                                 <i class="fa fa-calendar-check-o fa-3x mb-3 text-muted" style="opacity: 0.5;"/>
                                 <br/>
-                                На сегодня подтвержденных тренировок нет.<br/>
-                                <span class="small text-muted">Можно выпить кофе! ☕</span>
+                                There are no confirmed training sessions for today.<br/>
+                                <span class="small text-muted">You can have some coffee! ☕</span>
                             </div>
                         </t>
                     </div>
@@ -101,8 +101,8 @@
                 <div class="col-lg-4 col-12">
                     <div class="card p-4 shadow-sm border-0 h-100 d-flex flex-column" style="overflow: hidden;">
                         <div class="mb-2">
-                            <h4 class="mb-0 fw-bold text-nowrap">Аналитика доходов</h4>
-                            <p class="text-muted small mb-0">История заработка по месяцам</p>
+                            <h4 class="mb-0 fw-bold text-nowrap">Revenue Analytics</h4>
+                            <p class="text-muted small mb-0">Monthly Earnings History</p>
                         </div>
 
                         <div class="chart_container flex-grow-1 mt-3" style="position: relative; min-height: 280px; width: 100%;">
@@ -115,7 +115,7 @@
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100 text-center text-muted py-5">
                                     <div>
                                         <i class="fa fa-bar-chart d-block fs-2 mb-2 text-warning" style="opacity: 0.5;"></i>
-                                        <p class="small mb-0">Нет данных для графиков за последние 6 месяцев</p>
+                                        <p class="small mb-0">No data available for charts for the last 6 months.</p>
                                     </div>
                                 </div>
                             </t>

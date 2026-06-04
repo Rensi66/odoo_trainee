@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_report_payroll_pdf" model="ir.actions.report">
-        <field name="name">Ведомость выплат тренерам</field>
+        <field name="name">Coach Payment Register</field>
         <field name="model">tennis.universal.report.wizard</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">tennis.report_payroll_template</field>
@@ -14,16 +14,16 @@
             <t t-call="web.internal_layout">
                 <div class="page">
                     <div class="text-center mb-5">
-                        <h2>Ведомость расчета выплат тренерскому составу</h2>
-                        <h4>Период анализа: <t t-out="date_from"/> — <t t-out="date_to"/></h4>
+                        <h2>Statement of Payments to Coaching Staff</h2>
+                        <h4>Analysis Period: <t t-out="date_from"/> — <t t-out="date_to"/></h4>
                     </div>
 
                     <table class="table table-bordered table-striped">
                         <thead class="bg-200">
                             <tr>
-                                <th>ФИО Тренера</th>
-                                <th class="text-center">Кол-во проведенных занятий</th>
-                                <th class="text-right">Сумма к выплате (ФОТ)</th>
+                                <th>Coach's Full Name</th>
+                                <th class="text-center">Number of trainings conducted</th>
+                                <th class="text-right">Amount Payable (Payroll)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,9 +39,9 @@
                                 </tr>
                             </t>
                             <tr class="bg-100 font-weight-bold" style="border-top: 2px solid #000;">
-                                <td>ИТОГО К ВЫПЛАТЕ</td>
+                                <td>TOTAL PAYABLE</td>
                                 <td class="text-center">
-                                    <t t-out="sum(c['trainings_count'] for c in coaches)"/>
+                                    <t t-out="total_trainings"/>
                                 </td>
                                 <td class="text-right text-danger" style="font-size: 16px;">
                                     <span t-out="total_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="view_tennis_partner_search" model="ir.ui.view">
         <field name="name">res.partner.tennis.search</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <search string="Поиск клиентов">
+            <search string="Client Search">
                 <field name="name" filter_domain="['|', ('name', 'ilike', self), ('phone', 'ilike', self)]"/>
-                <filter string="Теннисные клиенты" name="filter_is_tennis" domain="[('is_tennis_client', '=', True)]"/>
-                <group expand="0" string="Группировка">
-                    <filter string="Статус" name="groupby_client_status" context="{'group_by': 'client_status'}"/>
-                    <filter string="Уровень игры" name="groupby_tennis_level" context="{'group_by': 'tennis_level'}"/>
+                <filter string="Tennis Clients" name="filter_is_tennis" domain="[('is_tennis_client', '=', True)]"/>
+                <group expand="0" string="Grouping">
+                    <filter string="Status" name="groupby_client_status" context="{'group_by': 'client_status'}"/>
+                    <filter string="Skill Level" name="groupby_tennis_level" context="{'group_by': 'tennis_level'}"/>
                 </group>
             </search>
         </field>
@@ -20,30 +19,30 @@
         <field name="name">res.partner.tennis.list</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <list string="Мои клиенты" sample="1" create="1">
-                <field name="name" string="Клиент" decoration-bf="1" readonly="1"/>
-                <field name="phone" string="Контакты" readonly="1"/>
+            <list string="My Clients" sample="1" create="0">
+                <field name="name" string="Client" decoration-bf="1" readonly="1"/>
+                <field name="phone" string="Contacts" readonly="1"/>
                 <field name="email" string="Email" optional="hide" readonly="1"/>
 
-                <field name="tennis_level" string="Уровень" widget="badge" optional="show"
+                <field name="tennis_level" string="Level" widget="badge" optional="show"
                        decoration-info="tennis_level == 'beginner'"
                        decoration-warning="tennis_level == 'intermediate'"
                        decoration-danger="tennis_level == 'expert'"/>
 
-                <field name="training_count" string="Тренировок" icon="fa-calendar" decoration-bf="1"/>
-                <field name="last_training_date" string="Последняя" widget="date" readonly="1"/>
+                <field name="training_count" string="Trainings" icon="fa-calendar" decoration-bf="1"/>
+                <field name="last_training_date" string="The Last One" widget="date" readonly="1"/>
 
-                <field name="tennis_balance" string="Баланс" widget="monetary"
-                       decoration-danger="tennis_balance &lt; 0" sum="Общий баланс"
+                <field name="tennis_balance" string="Balance" widget="monetary"
+                       decoration-danger="tennis_balance &lt; 0" sum="Total Balance"
                        groups="tennis.group_tennis_manager"/>
 
-                <field name="client_status" string="Статус" widget="badge" readonly="1"
+                <field name="client_status" string="Status" widget="badge" readonly="1"
                        decoration-success="client_status == 'active'"
                        decoration-muted="client_status == 'inactive'"
                        decoration-warning="client_status == 'new'"/>
 
-                <button name="action_create_single_training"
-                        string="Записать"
+                <button name="button_create_single_training"
+                        string="Record"
                         type="object"
                         icon="fa-plus-circle"
                         class="btn-link text-success"/>
@@ -69,7 +68,7 @@
                                 <div>
                                     <strong class="o_kanban_record_title fs-5"><field name="name"/></strong>
                                     <div t-if="record.phone.raw_value" class="text-muted small mt-1">
-                                        <i class="fa fa-phone me-1" title="Телефон"/> <field name="phone"/>
+                                        <i class="fa fa-phone me-1" title="Phone"/> <field name="phone"/>
                                     </div>
                                     <div class="mt-2">
                                         <field name="client_status" widget="badge"
@@ -80,7 +79,7 @@
                                 </div>
                                 <div class="mt-2">
                                     <span class="badge rounded-pill text-bg-success px-2 py-1">
-                                        <i class="fa fa-history me-1" title="Количество тренировок"/> Игр: <field name="training_count"/>
+                                        <i class="fa fa-history me-1" title="Number of trainings"/> Games: <field name="training_count"/>
                                     </span>
                                 </div>
                             </div>
@@ -95,22 +94,22 @@
         <field name="name">res.partner.tennis.form</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <form string="Карточка теннисного клиента">
+            <form string="Tennis Client Profile">
                 <sheet>
                     <field name="avatar_128" widget="image" class="oe_avatar" options="{'size': [90, 90]}"/>
 
                     <div class="oe_title">
-                        <label for="name" string="ФИО Ученика" class="oe_edit_only text-muted"/>
+                        <label for="name" string="Student's Full Name" class="oe_edit_only text-muted"/>
                         <h1>
-                            <field name="name" default_focus="1" placeholder="Например: Петров Александр" required="1"/>
+                            <field name="name" default_focus="1" placeholder="For example: Alex Levon" required="1"/>
                         </h1>
                     </div>
 
                     <div class="row mt-4">
                         <div class="col-md-6 border-end">
-                            <h4 class="text-primary mb-3"><i class="fa fa-address-card-o me-2"/>Контактные данные</h4>
+                            <h4 class="text-primary mb-3"><i class="fa fa-address-card-o me-2"/>Contact Details</h4>
                             <group var="contacts_group" class="oe_inline">
-                                <field name="phone" widget="phone" string="📱 Телефон"
+                                <field name="phone" widget="phone" string="📱 Phone"
                                        placeholder="+7 (999) 000-00-00"
                                        readonly="is_manager == False"/>
 
@@ -121,34 +120,34 @@
                         </div>
 
                         <div class="col-md-6 ps-md-4">
-                            <h4 class="text-primary mb-3"><i class="fa fa-trophy me-2"/>Спортивный профиль</h4>
+                            <h4 class="text-primary mb-3"><i class="fa fa-trophy me-2"/>Sports Profile</h4>
                             <group var="sports_group" class="oe_inline">
-                                <field name="tennis_level" widget="radio" string="🎾 Уровень" options="{'horizontal': true}"/>
+                                <field name="tennis_level" widget="radio" string="🎾 Level" options="{'horizontal': true}"/>
                                 <field name="currency_id" invisible="1"/>
 
-                                <field name="tennis_balance" widget="monetary" string="💰 Баланс счета"
+                                <field name="tennis_balance" widget="monetary" string="💰 Account Balance"
                                        decoration-danger="tennis_balance &lt; 0"
                                        decoration-success="tennis_balance &gt;= 0"
                                        groups="tennis.group_tennis_manager"/>
 
-                                <field name="training_count" string="📊 Всего посещений" class="fw-bold"/>
-                                <field name="last_training_date" string="📅 Последняя игра" widget="date"/>
+                                <field name="training_count" string="📊 Total Visits" class="fw-bold"/>
+                                <field name="last_training_date" string="📅 The Last game" widget="date"/>
                             </group>
                         </div>
                     </div>
 
                     <notebook class="mt-4">
-                        <page string="🩺 Медицинская карта" name="medical_page">
+                        <page string="🩺 Medical Record" name="medical_page">
                             <div class="alert alert-info mb-3" role="alert" invisible="medical_notes">
-                                У этого клиента не заполнены медицинские противопоказания.
+                                This client's medical contraindications have not been filled out.
                             </div>
-                            <group string="Ограничения, травмы и противопоказания по здоровью">
-                                <field name="medical_notes" nolabel="1" placeholder="Укажите здесь проблемы со здоровьем..."/>
+                            <group string="Restrictions, injuries, and health contraindications">
+                                <field name="medical_notes" nolabel="1" placeholder="List any health issues here..."/>
                             </group>
                         </page>
-                        <page string="📝 Заметки тренера" name="coach_page">
-                            <group string="План развития игрока и замечания по технике">
-                                <field name="coach_private_notes" nolabel="1" placeholder="Опишите сильные и слабые стороны игрока..." options="{'collaborative': true, 'resizable': true}"/>
+                        <page string="📝 Coach's Notes" name="coach_page">
+                            <group string="Player development plan and technical notes">
+                                <field name="coach_private_notes" nolabel="1" placeholder="Describe the player's strengths and weaknesses..." options="{'collaborative': true, 'resizable': true}"/>
                             </group>
                         </page>
                     </notebook>
@@ -158,7 +157,7 @@
     </record>
 
     <record id="action_tennis_clients" model="ir.actions.act_window">
-            <field name="name">Клиенты центра</field>
+            <field name="name">Center Clients</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">list,kanban,form</field>
             <field name="context">{'search_default_groupby_client_status': 1}</field>

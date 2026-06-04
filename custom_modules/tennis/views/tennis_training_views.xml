@@ -1,62 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- КАЛЕНДАРЬ -->
     <record id="view_tennis_training_calendar" model="ir.ui.view">
         <field name="name">tennis.training.calendar</field>
         <field name="model">tennis.training</field>
         <field name="arch" type="xml">
-            <!-- color меняем на 'is_own_training', чтобы чужие записи не подсвечивались цветом статуса и не выдавали себя -->
-            <calendar string="Расписание"
+            <calendar string="Schedule"
                       date_start="start_datetime"
                       date_delay="duration"
                       color="is_own_training"
                       mode="week"
                       quick_create="False"
-                      event_open_popup="True"> <!-- Открывает форму в поп-апе, как в стандарте -->
+                      event_open_popup="True">
 
-                <!-- Эти поля создадут фильтры в правой колонке календаря -->
                 <field name="center_id" filters="1"/>
-                <!-- УБРАНО: поле фильтра по тренеру, чтобы правая панель не сдавала имена -->
                 <field name="court" filters="1"/>
                 <field name="training_type" filters="1"/>
                 <field name="state" filters="1"/>
 
-                <!-- Поля для маскированного отображения в поп-апе -->
-                <field name="display_coach" string="Тренер"/>
-                <field name="display_clients" string="Клиенты"/>
+                <field name="display_coach" string="Coach"/>
+                <field name="display_clients" string="Clients"/>
             </calendar>
         </field>
     </record>
 
-    <!--    СПИСОК   -->
     <record id="view_tennis_training_list" model="ir.ui.view">
         <field name="name">tennis.training.list</field>
         <field name="model">tennis.training</field>
         <field name="arch" type="xml">
-            <list string="Расписание"
+            <list string="Schedule"
                   decoration-danger="state == 'cancel'"
                   decoration-muted="state == 'done'"
                   decoration-bf="state == 'to_approve'">
 
                 <header>
-                    <button name="action_tennis_recurring_training"
-                            string="Сгенерировать серию"
+                    <button name="button_tennis_recurring_training"
+                            string="Generate a series"
                             type="object"
                             class="btn-primary"
                             display="always"/>
                 </header>
 
-                <field name="start_datetime" string="Дата и время"/>
-                <!-- Заменяем прямое поле клиентов на маскированное текстовое поле -->
-                <field name="display_clients" string="Клиенты"/>
+                <field name="start_datetime" string="Date and Time"/>
+                <field name="display_clients" string="Clients"/>
                 <field name="training_type" widget="badge"
                        decoration-info="training_type == 'individual'"
                        decoration-warning="training_type == 'split'"
                        decoration-primary="training_type == 'group'"/>
-                <!-- Заменяем tennis_coach_id на display_coach, чтобы чужие тренеры не видели имена коллег -->
-                <field name="display_coach" string="Тренер"/>
+                <field name="display_coach" string="Coach"/>
                 <field name="court"/>
-                <field name="duration" string="Длительность (ч)"/>
+                <field name="duration" string="Duration (h)"/>
 
                 <field name="state" widget="badge"
                        decoration-warning="state == 'to_approve'"
@@ -69,44 +61,40 @@
         </field>
     </record>
 
-    <!-- ФОРМА -->
     <record id="view_tennis_training_form_enriched" model="ir.ui.view">
         <field name="name">tennis.training.form</field>
         <field name="model">tennis.training</field>
         <field name="arch" type="xml">
-            <!-- Блокируем изменение и удаление карточки на уровне Odoo, если она чужая -->
             <form string="Training Session" edit="is_own_training" delete="is_own_training">
                 <header>
-                    <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft' or not is_own_training"/>
-                    <button name="action_cancel" string="Cancel" type="object" invisible="state not in ('confirmed') or not is_own_training"/>
+                    <button name="button_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft' or not is_own_training"/>
+                    <button name="button_cancel" string="Cancel" type="object" invisible="state not in ('confirmed') or not is_own_training"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,to_approve,confirmed,in_progress,done"/>
                 </header>
 
                 <sheet>
-                    <!-- Техническое поле для управления видимостью элементов -->
                     <field name="is_own_training" invisible="1"/>
 
                     <div class="oe_button_box" name="button_box">
-                        <button name="accept_training" type="object" string="Accept"
+                        <button name="button_accept_training" type="object" string="Accept"
                                 class="oe_stat_button text-success" icon="fa-check"
                                 groups="tennis.group_tennis_manager"
                                 invisible="state != 'to_approve' and state != 'to_approve_cancel'"/>
-                        <button name="cancel_training" type="object" string="Cancel"
+                        <button name="button_cancel" type="object" string="Cancel"
                                 class="oe_stat_button text-danger" icon="fa-times"
                                 groups="tennis.group_tennis_manager"
                                 invisible="state != 'to_approve' and state != 'to_approve_cancel'"/>
                     </div>
 
                     <div class="oe_title">
-                        <label for="name" string="Название тренировки" class="oe_edit_only" invisible="not is_own_training"/>
+                        <label for="name" string="Workout Title" class="oe_edit_only" invisible="not is_own_training"/>
                         <h1>
-                            <!-- Прячем реальное название тренировки, если она чужая -->
                             <field name="name" placeholder="Training name" invisible="not is_own_training"/>
-                            <span invisible="is_own_training" class="text-muted">Занятое время</span>
+                            <span invisible="is_own_training" class="text-muted">Time Taken</span>
                         </h1>
 
                         <div class="d-flex align-items-center gap-2 mt-2">
-                            <label for="training_type" string="Категория" class="fw-bold text-muted"/>
+                            <label for="training_type" string="Category" class="fw-bold text-muted"/>
                             <field name="training_type" class="oe_inline fw-bold text-primary" readonly="not is_own_training"/>
                         </div>
                     </div>
@@ -114,37 +102,34 @@
                     <hr class="my-4" style="border-top: 1px solid #e2e8f0;"/>
 
                     <group col="2">
-                        <group string="📅 ИНФОРМАЦИЯ О ВРЕМЕНИ">
-                            <field name="start_datetime" string="Дата и время" widget="datetime" readonly="not is_own_training"/>
-                            <label for="duration" string="Длительность"/>
+                        <group string="📅 TIME INFORMATION">
+                            <field name="start_datetime" string="Date and Time" widget="datetime" readonly="not is_own_training"/>
+                            <label for="duration" string="Duration"/>
                             <div class="o_row">
                                 <field name="duration" widget="float_time" class="oe_inline" readonly="not is_own_training"/>
                                 <span class="text-muted"> hours</span>
                             </div>
-                            <field name="center_id" string="Теннисный中心" on_change="1" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="center_id" string="Tennis Center" on_change="1" options="{'no_create': True, 'no_open': True}"/>
                         </group>
 
-                        <group string="🔍 ЛОКАЦИЯ И ФИНАНСЫ">
-                            <field name="court" string="Корт" options="{'no_open': True, 'no_create': True}" readonly="not is_own_training"/>
+                        <group string="🔍 LOCATION AND FINANCES">
+                            <field name="court" string="Court" options="{'no_open': True, 'no_create': True}" readonly="not is_own_training"/>
 
-                            <!-- Если тренировка своя — доступен выбор тренера. Если чужая — выводим маску текста -->
-                            <field name="tennis_coach_id" string="Тренер" domain="[('center_id', '=', center_id)]" options="{'no_quick_create': True, 'no_open': True}" invisible="not is_own_training"/>
-                            <field name="display_coach" string="Тренер" invisible="is_own_training"/>
+                            <field name="tennis_coach_id" string="Coach" domain="[('center_id', '=', center_id)]" options="{'no_quick_create': True, 'no_open': True}" invisible="not is_own_training"/>
+                            <field name="display_coach" string="Coach" invisible="is_own_training"/>
 
-                            <!-- Ставку тренера скрываем от посторонних глаз -->
-                            <field name="price_coach" string="Ставка тренера" widget="monetary" invisible="not is_own_training"/>
-                            <field name="price_center" string="Аренда корта" groups="tennis.group_tennis_manager" widget="monetary"/>
-                            <field name="price_total" string="Итоговая сумма" groups="tennis.group_tennis_manager" class="fw-bold text-success" widget="monetary"/>
+                            <field name="price_coach" string="The Coach's Bet" widget="monetary" invisible="not is_own_training"/>
+                            <field name="price_center" string="Court Rental" groups="tennis.group_tennis_owner,tennis.group_tennis_manager" widget="monetary"/>
+                            <field name="price_total" string="Total Amount" groups="tennis.group_tennis_owner,tennis.group_tennis_manager" class="fw-bold text-success" widget="monetary"/>
                         </group>
                     </group>
 
-                    <!-- Вкладку клиентов полностью скрываем, если тренер не является хозяином записи -->
                     <notebook class="mt-4" invisible="not is_own_training">
-                        <page string="👥 Клиенты" name="clients_page">
+                        <page string="👥 Clients" name="clients_page">
                             <field name="client_ids">
                                 <list editable="bottom" class="o_list_compact">
-                                    <field name="name" string="ФИО" style="width: 60%;"/>
-                                    <field name="phone" widget="phone" string="Телефон" style="width: 40%;"/>
+                                    <field name="name" string="Full Name" style="width: 60%;"/>
+                                    <field name="phone" widget="phone" string="Phone" style="width: 40%;"/>
                                 </list>
                             </field>
                         </page>
@@ -152,14 +137,14 @@
 
                     <div invisible="(not start_datetime or not court) or (state != 'draft' and state != 'confirmed')"
                          class="mt-4 p-3 border border-warning rounded bg-warning-subtle text-warning-dark">
-                        <h4 class="mb-3"><i class="fa fa-exclamation-triangle"></i> Занятость корта на выбранный день</h4>
+                        <h4 class="mb-3"><i class="fa fa-exclamation-triangle"></i> Court Availability for the Selected Day</h4>
                         <field name="busy_courts_ids" readonly="1" nolabel="1">
                             <list empty_create="false" no_open="true" create="false" edit="false" delete="false">
-                                <field name="start_datetime" string="Время начала" widget="datetime" options="{'format': 'HH:mm'}"/>
-                                <field name="end_datetime" string="Время окончания" widget="datetime" options="{'format': 'HH:mm'}"/>
+                                <field name="start_datetime" string="Start Time" widget="datetime" options="{'format': 'HH:mm'}"/>
+                                <field name="end_datetime" string="End time" widget="datetime" options="{'format': 'HH:mm'}"/>
                                 <field name="court"/>
-                                <field name="display_coach" string="Тренер"/>
-                                <field name="display_clients" string="Клиенты"/>
+                                <field name="display_coach" string="Coach"/>
+                                <field name="display_clients" string="Clients"/>
                                 <field name="state" widget="badge"
                                        decoration-info="state == 'draft'"
                                        decoration-success="state == 'confirmed'"/>
@@ -171,28 +156,26 @@
         </field>
     </record>
 
-    <!-- ПРЕДСТАВЛЕНИЕ ПОИСКА (SEARCH VIEW) -->
-    <!-- Добавлено с нуля, чтобы закрыть уязвимость глобального поиска по тренерам сверху страницы -->
     <record id="view_tennis_training_search" model="ir.ui.view">
         <field name="name">tennis.training.search</field>
         <field name="model">tennis.training</field>
         <field name="arch" type="xml">
-            <search string="Поиск тренировок">
-                <field name="name" string="Название"/>
-                <field name="court" string="Корт"/>
-                <field name="start_datetime" string="Дата"/>
+            <search string="Search for trainings">
+                <field name="name" string="Title"/>
+                <field name="court" string="Court"/>
+                <field name="start_datetime" string="Date"/>
 
-                <field name="tennis_coach_id" string="Тренер" groups="tennis.group_tennis_manager,tennis.group_tennis_owner"/>
+                <field name="tennis_coach_id" string="Coach" groups="tennis.group_tennis_manager,tennis.group_tennis_owner"/>
 
-                <filter string="Мои тренировки"
+                <filter string="My trainings"
                         name="my_trainings"
                         domain="[('is_own_training', '=', True)]"
                         groups="tennis.group_tennis_coach"/>
 
-                <group expand="0" string="Группировать по">
-                    <filter string="Корт" name="group_by_court" context="{'group_by': 'court'}"/>
-                    <filter string="Тип тренировки" name="group_by_type" context="{'group_by': 'training_type'}"/>
-                    <filter string="Тренер" name="group_by_coach" context="{'group_by': 'tennis_coach_id'}" groups="tennis.group_tennis_manager,tennis.group_tennis_owner"/>
+                <group expand="0" string="Group by">
+                    <filter string="Court" name="group_by_court" context="{'group_by': 'court'}"/>
+                    <filter string="Training type" name="group_by_type" context="{'group_by': 'training_type'}"/>
+                    <filter string="Coach" name="group_by_coach" context="{'group_by': 'tennis_coach_id'}" groups="tennis.group_tennis_manager,tennis.group_tennis_owner"/>
                 </group>
             </search>
         </field>
@@ -209,7 +192,7 @@
                 <ul>
                     <li><strong>Coach:</strong> <t t-out="object.tennis_coach_id.name"/></li>
                     <li><strong>Start Time:</strong> <t t-out="object.start_datetime"/></li>
-                    <li><strong>Duration:</strong> <t t-out="object.duration"/> ч.</li>
+                    <li><strong>Duration:</strong> <t t-out="object.duration"/> h.</li>
                     <li><strong>Coach Price:</strong> <t t-out="object.price_coach"/></li>
                     <li><strong>Center Price:</strong> <t t-out="object.price_center"/></li>
                     <li><strong>Total Price:</strong> <t t-out="object.price_total"/></li>
@@ -219,18 +202,17 @@
         </field>
     </record>
 
-    <!-- ЭКШЕН -->
     <record id="action_tennis_training" model="ir.actions.act_window">
-        <field name="name">Расписание тренировок</field>
+        <field name="name">Training Schedule</field>
         <field name="res_model">tennis.training</field>
         <field name="view_mode">calendar,list,form</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">Кликните на календарь, чтобы создать тренировку!</p>
+            <p class="o_view_nocontent_smiling_face">Click on the calendar to create a workout!</p>
         </field>
     </record>
 
     <record id="action_tennis_manager_approvals" model="ir.actions.act_window">
-        <field name="name">Заявки от тренеров</field>
+        <field name="name">Applications from coaches</field>
         <field name="res_model">tennis.training</field>
         <field name="view_mode">list,form</field>
         <field name="domain">[('state', 'in', ['to_approve', 'to_approve_cancel'])]</field>
