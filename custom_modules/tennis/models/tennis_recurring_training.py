@@ -34,6 +34,7 @@ class TennisRecurringTraining(models.TransientModel):
     date_from = fields.Date(string="Start Date", required=True)
     date_to = fields.Date(string="End Date", required=True)
     is_owner = fields.Boolean(required=True, default=False)
+    is_manager = fields.Boolean(required=True, default=False)
 
     center_id = fields.Many2one("tennis.center", string="Center", required=True, default=lambda self: self.env.user.employee_id.center_id)
     tennis_coach_id = fields.Many2one("tennis.coach", string="Coach", required=True)
@@ -44,7 +45,15 @@ class TennisRecurringTraining(models.TransientModel):
     def default_get(self, fields_list):
         """Set the default configuration for the recurring training wizard."""
         res = super().default_get(fields_list)
-        res["is_owner"] = self.env.user.has_group("tennis.group_tennis_owner")
+        is_owner = self.env.user.has_group("tennis.group_tennis_owner")
+        is_manager = self.env.user.has_group("tennis.group_tennis_manager")
+        is_coach = self.env.user.has_group("tennis.group_tennis_coach")
+        res["is_owner"] = is_owner
+        res["is_manager"] = is_manager
+
+        if is_coach and not (is_manager or is_owner):
+            coach = self.env["tennis.coach"].search([("user_id", "=", self.env.user.id)], limit=1)
+            res["tennis_coach_id"] = coach.id
 
         return res
 

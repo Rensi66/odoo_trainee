@@ -24,11 +24,12 @@
                             </h5>
                             <group class="mt-0">
                                 <field name="is_owner" invisible="1"/>
+                                <field name="is_manager" invisible="1"/>
 
                                 <field name="name" string="Series Title" placeholder="For example: Group A — Monday/Wednesday"/>
                                 <field name="center_id" string="Tennis Center" readonly="not is_owner" options="{'no_open': True, 'no_create': True}"/>
                                 <field name="court" string="Court" options="{'no_open': True, 'no_create': True}"/>
-                                <field name="tennis_coach_id" string="Coach" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="tennis_coach_id" string="Coach" options="{'no_open': True, 'no_create': True}" readonly="not is_owner and not is_manager"/>
                                 <field name="training_type" string="Training type"/>
                                 <field name="client_id" string="Primary Client" options="{'no_open': True, 'no_create': True}"/>
                             </group>

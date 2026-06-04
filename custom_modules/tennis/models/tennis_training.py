@@ -359,6 +359,9 @@ class TennisTraining(models.Model):
         """Trigger confirmation actions automatically if essential training parameters change."""
         change_training_ids = []
         for record in self:
+            if record.state in ["in_progress", "done"]:
+                raise ValidationError("You can`t change trainings in progress or done.")
+
             if "start_datetime" in vals or "duration" in vals or "court" in vals:
                 if record.state == "confirmed":
                     change_training_ids.append(record)
