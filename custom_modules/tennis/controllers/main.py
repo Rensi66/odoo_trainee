@@ -7,7 +7,11 @@ class TennisController(Controller):
     def accept_invitation_manager(self, center_id, **kwargs):
         """Accept manager invitation, assign security group, link employee to the sports center, and redirect to the dashboard."""
         manager_group = request.env.ref("tennis.group_tennis_manager")
-        request.env.user.write({"groups_id": [(4, manager_group.id)]})
+        request.env.user.sudo().write({"groups_id": [(4, manager_group.id)]})
+
+        center = request.env['tennis.center'].sudo().browse(int(center_id))
+        if not center.exists():
+            return "A center with this ID was not found, please contact the administrator."
 
         employee_id = request.env["hr.employee"].sudo().search(
             [("user_id", "=", request.env.user.id)],
@@ -24,7 +28,11 @@ class TennisController(Controller):
     def accept_invitation_coach(self, center_id, **kwargs):
         """Accept coach invitation, assign security group, link coach to the sports center, and redirect to the dashboard."""
         coach_group = request.env.ref("tennis.group_tennis_coach")
-        request.env.user.write({"groups_id": [(4, coach_group.id)]})
+        request.env.user.sudo().write({"groups_id": [(4, coach_group.id)]})
+
+        center = request.env['tennis.center'].sudo().browse(int(center_id))
+        if not center.exists():
+            return "A center with this ID was not found, please contact the administrator."
 
         coach_id = request.env["tennis.coach"].sudo().search(
             [("user_id", "=", request.env.user.id)],

@@ -83,6 +83,16 @@ class TennisCenter(models.Model):
             if center_id.court < 1:
                 raise ValidationError("Court cannot be less than 1.")
 
+    def write(self, vals):
+        """Remove rights and disconnect from the center when changing the manager"""
+        if "manager_id" in vals:
+            for center in self:
+                if center.manager_id and center.manager_id != vals["manager_id"]:
+                    center.manager_id.sudo().write({"center_id": False})
+                    center.manager_id.user_id.sudo().write({"groups_id": [(3, self.env.ref("tennis.group_tennis_manager").id, 0)]})
+
+        return super().write(vals)
+
     @api.model
     def get_manager_dashboard_data(self, center_id=None):
         """Fetch and compile real-time metrics, occupancy, and financial data for the manager dashboard."""

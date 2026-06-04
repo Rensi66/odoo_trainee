@@ -65,7 +65,7 @@
                                     <div class="col-sm-4 text-dark font-weight-bold" style="font-size: 14px;">Working hours:</div>
                                     <div class="col-sm-8">
                                         <div class="d-flex align-items-center">
-                                            <span class="badge badge-success px-3 py-2 mr-2" style="font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">С</span>
+                                            <span class="badge badge-success px-1 py-2 mr-2" style="font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">FROM</span>
                                             <field name="start_time" widget="float_time" class="font-weight-bold text-dark text-center" style="font-size: 15px; background: #f8f9fa; border-radius: 4px; padding: 2px 6px;"/>
                                             <span class="badge badge-secondary px-3 py-2 mx-2" style="font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">TO</span>
                                             <field name="end_time" widget="float_time" class="font-weight-bold text-dark text-center" style="font-size: 15px; background: #f8f9fa; border-radius: 4px; padding: 2px 6px;"/>
@@ -309,7 +309,7 @@
                 <p>Welcome, <t t-out="object.name"/>!</p>
                 <p>You have been invited to a tennis center <strong><t t-out="object.center_id.name"/></strong> as a coach.</p>
                 <div style="margin: 20px 0px;">
-                    <a t-att-href="object.get_base_url() + '/tennis/accept_invitation/coach/' + str(object.id)"
+                    <a t-att-href="object.get_base_url() + '/tennis/accept_invitation/coach/' + str(object.center_id.id)"
                        style="background-color: #875A7B; padding: 12px 24px; text-decoration: none; color: white; border-radius: 5px; font-weight: bold;">
                         Confirm coach role
                     </a>

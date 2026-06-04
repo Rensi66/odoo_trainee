@@ -72,6 +72,23 @@ class TennisCoach(models.Model):
 
         return res
 
+    def unlink(self):
+        """We remove rights and detach from the center upon dismissal"""
+        employee_ids = self.mapped("employee_id")
+        user_ids = employee_ids.mapped("user_id")
+
+        res = super().unlink()
+
+        if employee_ids:
+            employee_ids.sudo().write({"center_id": False})
+
+        if user_ids:
+            user_ids.sudo().write({
+                "groups_id": [(3, self.env.ref("tennis.group_tennis_coach").id, 0)]
+            })
+
+        return res
+
     @api.model
     def action_open_coach_form(self):
         """Return an action window to open the coach form view or list view depending on access rights."""
