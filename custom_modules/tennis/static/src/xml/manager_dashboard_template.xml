@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="tennis.ManagerDashboardTemplate">
+        <div class="o_tennis_dashboard p-4 text-dark">
+
+            <div class="mb-4">
+                <h2 class="fw-bold m-0"><i class="fa fa-tachometer text-primary me-2"/>Control Panel</h2>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card p-3 border-0 border-start border-danger border-4 shadow-sm custom-kpi-card">
+                        <div class="text-muted small fw-bold text-uppercase">🔥 Require attention</div>
+                        <div class="fs-2 fw-bold text-danger mt-1" t-esc="state.metrics.approvals"/>
+                        <span class="text-muted small mt-1">confirmation training</span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card p-3 border-0 border-start border-primary border-4 shadow-sm custom-kpi-card">
+                        <div class="text-muted small fw-bold text-uppercase">📈 Court Availability Today</div>
+                        <div class="fs-2 fw-bold text-primary mt-1" t-esc="state.metrics.occupancy"/>
+                        <span class="text-muted small mt-1">of the total operating time</span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card p-3 border-0 border-start border-success border-4 shadow-sm custom-kpi-card">
+                        <div class="text-muted small fw-bold text-uppercase">👥 New Clients</div>
+                        <div class="fs-2 fw-bold text-success mt-1" t-esc="state.metrics.new_clients"/>
+                        <span class="text-muted small mt-1">growth for the current month</span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card p-3 border-0 border-start border-warning border-4 shadow-sm custom-kpi-card">
+                        <div class="text-muted small fw-bold text-uppercase">💰 Center Revenue</div>
+                        <div class="fs-2 fw-bold text-warning mt-1" t-esc="state.metrics.revenue"/>
+                        <span class="text-muted small mt-1">for the current month</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-12 col-xl-6">
+                    <div class="card shadow-sm border-0 p-3 h-100">
+                        <h4 class="text-primary fw-bold mb-3">
+                            <i class="fa fa-money me-2 text-danger"/>Debt Monitoring
+                        </h4>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle m-0">
+                                <t t-if="state.debtors.length > 0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Client</th>
+                                            <th>Contacts</th>
+                                            <th class="text-end">Balance</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="state.debtors" t-as="debtor" t-key="debtor.id">
+                                            <tr>
+                                                <td>
+                                                    <span class="fw-bold text-primary text-decoration-none"
+                                                          style="cursor: pointer; border-bottom: 1px dashed;"
+                                                          t-on-click="() => this.openClient(debtor.id)"
+                                                          t-esc="debtor.name"/>
+                                                </td>
+                                                <td t-esc="debtor.phone" class="text-muted small"/>
+                                                <td class="text-danger text-end fw-bold" t-esc="debtor.balance + ' $'"/>
+                                                <td class="text-center">
+                                                    <button class="btn btn-sm btn-outline-success rounded-pill px-3" t-on-click="() => this.callClient(debtor.phone)">
+                                                        <i class="fa fa-phone me-1"/> Remind
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </t>
+                                <t t-else="">
+                                    <p class="text-muted m-2">Excellent! There are no debtors in the center.</p>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-6">
+                    <div class="card shadow-sm border-0 p-3 h-100">
+                        <h4 class="text-primary fw-bold mb-3">
+                            <i class="fa fa-calendar me-2 text-success"/>Today on the courts
+                        </h4>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle m-0">
+                                <t t-if="state.today_trainings.length > 0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Location</th>
+                                            <th>Coach</th>
+                                            <th class="text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="state.today_trainings" t-as="tr" t-key="tr.id">
+                                            <tr>
+                                                <td>
+                                                    <span class="fw-bold text-primary"
+                                                          style="cursor: pointer; border-bottom: 1px dashed;"
+                                                          t-on-click="() => this.openTraining(tr.id)"
+                                                          t-esc="tr.time"/>
+                                                </td>
+                                                <td t-esc="tr.court"/>
+                                                <td t-esc="tr.coach" class="text-muted"/>
+                                                <td class="text-center">
+                                                    <span t-attf-class="badge rounded-pill px-2 py-1 {{tr.state_class}}" t-esc="tr.state_label"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </t>
+                                <t t-else="">
+                                    <p class="text-muted m-2">No trainings are currently scheduled for today.</p>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="views_tennis_center_list" model="ir.ui.view">
+        <field name="name">Tennis Center Owner</field>
+        <field name="model">tennis.center</field>
+        <field name="arch" type="xml">
+            <list string="Tennis Centers" class="o_list_view">
+                <field name="name" string="Center Name" bold="1"/>
+                <field name="address" string="Branch Address"/>
+                <field name="manager_id" string="Manager" widget="many2one_avatar_user"/>
+                <field name="start_time" widget="float_time" string="Opening" optional="show"/>
+                <field name="end_time" widget="float_time" string="Closing" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tennis_center_form" model="ir.ui.view">
+        <field name="name">tennis.center.form</field>
+        <field name="model">tennis.center</field>
+        <field name="arch" type="xml">
+            <form string="Tennis Center">
+                <sheet>
+                    <field name="currency_id" invisible="1"/>
+
+                    <div class="oe_title">
+                        <label for="name" string="Tennis Complex" class="text-dark small text-uppercase font-weight-bold" style="letter-spacing: 1px;"/>
+                        <h1>
+                            <field name="name" placeholder="For example, St. John's Arena" class="text-primary font-weight-bold"/>
+                        </h1>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card shadow-sm p-4 mb-4 bg-white rounded" style="border: none; border-top: 3px solid #6c757d; min-height: 240px;">
+                                <h5 class="text-dark font-weight-bold mb-4">
+                                    <i class="fa fa-map-marker text-danger mr-2"></i> Location and Management
+                                </h5>
+
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-sm-5 text-dark font-weight-bold" style="font-size: 14px;">Branch Address:</div>
+                                    <div class="col-sm-7"><field name="address" placeholder="Specify the address..."/></div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-sm-5 text-dark font-weight-bold" style="font-size: 14px;">Number of courts:</div>
+                                    <div class="col-sm-7"><field name="court" class="font-weight-bold text-dark"/></div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-sm-5 text-dark font-weight-bold" style="font-size: 14px;">Owner:</div>
+                                    <div class="col-sm-7"><field name="owner_id" options="{'no_create': True}"/></div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-sm-5 text-dark font-weight-bold" style="font-size: 14px;">Center Manager:</div>
+                                    <div class="col-sm-7"><field name="manager_id" options="{'no_create': True}"/></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card shadow-sm p-4 mb-4 bg-white rounded" style="border: none; border-top: 3px solid #28a745; min-height: 240px;">
+                                <h5 class="text-dark font-weight-bold mb-4">
+                                    <i class="fa fa-clock-o text-success mr-2"></i> Business Hours
+                                </h5>
+
+                                <div class="row align-items-center mb-3">
+                                    <div class="col-sm-4 text-dark font-weight-bold" style="font-size: 14px;">Working hours:</div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge badge-success px-1 py-2 mr-2" style="font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">FROM</span>
+                                            <field name="start_time" widget="float_time" class="font-weight-bold text-dark text-center" style="font-size: 15px; background: #f8f9fa; border-radius: 4px; padding: 2px 6px;"/>
+                                            <span class="badge badge-secondary px-3 py-2 mx-2" style="font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">TO</span>
+                                            <field name="end_time" widget="float_time" class="font-weight-bold text-dark text-center" style="font-size: 15px; background: #f8f9fa; border-radius: 4px; padding: 2px 6px;"/>
+                                            <span class="text-dark font-weight-bold ml-2" style="font-size: 15px;">h.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center">
+                                    <div class="col-sm-4 text-dark font-weight-bold" style="font-size: 14px;">Time zone:</div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex align-items-center text-dark">
+                                            <i class="fa fa-globe text-success mr-2" style="font-size: 16px;"></i>
+                                            <field name="tz" class="font-weight-bold" style="font-size: 14px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm p-4 mb-4 bg-white rounded" style="border: none; border-top: 3px solid #ff9800;" invisible="not id">
+                        <h5 class="text-dark font-weight-bold mb-4">
+                            <i class="fa fa-line-chart text-warning mr-2"></i> The Center's Financial Performance Indicators
+                        </h5>
+
+                        <div class="row align-items-center">
+                            <div class="col-md-6 border-right">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="date_from" class="small text-muted font-weight-bold mb-1">Profit from:</label>
+                                        <field name="date_from" class="w-100"/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="date_to" class="small text-muted font-weight-bold mb-1">Profit to:</label>
+                                        <field name="date_to" class="w-100"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-6">
+                                        <button name="button_recalculate_profit"
+                                                string="Update calculations"
+                                                type="object"
+                                                icon="fa-refresh"
+                                                class="btn btn-primary btn-block shadow-sm"/>
+                                    </div>
+                                    <div class="col-sm-6 text-sm-right mt-3 mt-sm-0">
+                                        <div class="text-muted small text-uppercase font-weight-bold">Net Profit</div>
+                                        <div class="text-success font-weight-bold" style="font-size: 26px; line-height: 1;">
+                                            <field name="total_center_profit" widget="monetary" options="{'field_digits': True}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <notebook class="mt-4" invisible="not id">
+                        <page string="💰 Rate Schedule (per hour)" name="rates">
+                            <div class="p-4 bg-light rounded mt-2">
+                                <h6 class="text-dark font-weight-bold mb-4 text-uppercase" style="letter-spacing: 0.5px;">Court Rental Rates</h6>
+
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-md-4 text-dark font-weight-bold" style="font-size: 14px;">👨‍💼 Individual Plan:</div>
+                                    <div class="col-md-4"><field name="individual" widget="monetary" class="font-weight-bold text-success" style="font-size: 16px;"/></div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-md-4 text-dark font-weight-bold" style="font-size: 14px;">👥 Split Rate (2 people):</div>
+                                    <div class="col-md-4"><field name="split" widget="monetary" class="font-weight-bold text-success" style="font-size: 16px;"/></div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-md-4 text-dark font-weight-bold" style="font-size: 14px;">🎾 Group Rate:</div>
+                                    <div class="col-md-4"><field name="group" widget="monetary" class="font-weight-bold text-success" style="font-size: 16px;"/></div>
+                                </div>
+                            </div>
+                        </page>
+
+                        <page string="👥 Coaching Staff" name="trainers">
+                            <div class="alert alert-info" role="alert" style="margin-bottom: 10px; padding: 10px; border-radius: 5px;">
+                                <i class="fa fa-info-circle"/> The data below depends on the period specified in the panel above. Click <b>«Update Calculations»</b> for recalculation
+                            </div>
+
+                            <div class="mt-2">
+                                <field name="tennis_coach_ids" mode="list">
+                                    <list string="Coaches" create="0" edit="0" delete="0">
+                                        <field name="currency_id" column_invisible="True"/>
+
+                                        <field name="name" string="Employee's Full Name" bold="1"/>
+
+                                        <field name="profit_for_center"
+                                               string="Generated for the center during the period"
+                                               widget="monetary"
+                                               bold="1"
+                                               decoration-success="profit_for_center &gt; 0"
+                                               options="{'currency_field': 'currency_id'}"/>
+                                    </list>
+                                </field>
+                            </div>
+                        </page>
+
+                        <page string="📊 Trainings Analytics" name="training_analytics">
+                            <div class="alert alert-warning d-flex align-items-center shadow-sm" role="alert" style="margin-bottom: 25px; border-left: 5px solid #ffbc00;">
+                                <i class="fa fa-star fa-2x text-warning mr-3"></i>
+                                <div>
+                                    <div class="text-muted small text-uppercase font-weight-bold">The absolute leader of the period:</div>
+                                    <div class="text-dark font-weight-bold" style="font-size: 16px;">
+                                        <field name="most_popular_training_type"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-light rounded border shadow-sm">
+                                        <h6 class="font-weight-bold text-dark"><i class="fa fa-user text-primary mr-2"></i> Individual</h6>
+                                        <hr class="my-2"/>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-muted">Done:</span>
+                                            <span class="font-weight-bold text-info"><field name="stat_individual_count"/> trn.</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <span class="text-muted">Center Revenue:</span>
+                                            <span class="font-weight-bold text-success"><field name="stat_individual_profit" widget="monetary"/></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-light rounded border shadow-sm">
+                                        <h6 class="font-weight-bold text-dark"><i class="fa fa-users text-warning mr-2"></i> Split</h6>
+                                        <hr class="my-2"/>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-muted">Done:</span>
+                                            <span class="font-weight-bold text-info"><field name="stat_split_count"/> trn.</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <span class="text-muted">Center Revenue:</span>
+                                            <span class="font-weight-bold text-success"><field name="stat_split_profit" widget="monetary"/></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-light rounded border shadow-sm">
+                                        <h6 class="font-weight-bold text-dark"><i class="fa fa-graduation-cap text-danger mr-2"></i> Group</h6>
+                                        <hr class="my-2"/>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-muted">Done:</span>
+                                            <span class="font-weight-bold text-info"><field name="stat_group_count"/> trn.</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <span class="text-muted">Center Revenue:</span>
+                                            <span class="font-weight-bold text-success"><field name="stat_group_profit" widget="monetary"/></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </page>
+
+                        <page string="🏃‍♂️ Client Analytics" name="client_analytics_page">
+                            <group string="Consolidated indicators for the specified period">
+                                <group>
+                                    <field name="stat_clients_count" string="Unique Clients (Total)"/>
+                                </group>
+                                <group>
+                                    <field name="stat_visits_count" string="Total Visits (Trainings)"/>
+                                </group>
+                            </group>
+
+                            <separator string="List of Clients and Visits"/>
+                            <field name="client_activity_html" widget="html" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    INVITATION FOR MANAGER     -->
+    <record id="email_template_manager_invitation" model="mail.template">
+        <field name="name">Tennis Center: Manager Assignment</field>
+        <field name="model_id" ref="model_tennis_center"/>
+        <field name="subject">You have been appointed as a manager in {{ object.name }}</field>
+        <field name="email_from">{{ (object.owner_id.email_formatted or user.email_formatted) }}</field>
+        <field name="email_to">{{ object.manager_id.work_email or object.manager_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Welcome,<t t-out="object.manager_id.name"/>!
+                </p>
+                <p>We hereby inform you that you have been appointed as the manager in charge of the tennis center
+                    <strong>
+                        <t t-out="object.name"/>
+                    </strong>
+                    .
+                    <div style="margin: 20px 0px;">
+                        <a t-att-href="object.get_base_url() + '/tennis/accept_invitation/' + str(object.id)"
+                           style="background-color: #875A7B; padding: 12px 24px; text-decoration: none; color: white; border-radius: 5px; font-weight: bold;">
+                            Confirm Manager Role
+                        </a>
+                    </div>
+                </p>
+                <p>Center Address:
+                    <t t-out="object.address"/>
+                </p>
+                <br/>
+                <p>Sincerely, The Court Management Team</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="action_send_manager_invitation" model="ir.actions.server">
+        <field name="name">Send Manager Invitation</field>
+        <field name="model_id" ref="model_tennis_center"/>
+        <field name="state">code</field>
+        <field name="code">
+            if record.manager_id:
+            template = env.ref('tennis.email_template_manager_invitation')
+            template.send_mail(record.id, force_send=True)
+        </field>
+    </record>
+
+    <record id="rule_on_manager_assignment" model="base.automation">
+        <field name="name">Tennis: Send Invite on Manager Assign</field>
+        <field name="model_id" ref="model_tennis_center"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="trigger_field_ids" eval="[(4, ref('tennis.field_tennis_center__manager_id'))]"/>
+        <field name="action_server_ids" eval="[(4, ref('tennis.action_send_manager_invitation'))]"/>
+    </record>
+
+    <!--    INVITATION FOR COACH    -->
+    <record id="email_template_coach_invitation" model="mail.template">
+        <field name="name">Tennis Center: Coach Assignment</field>
+        <field name="model_id" ref="model_tennis_coach"/>
+        <field name="subject">You have been appointed as a coach in {{ object.center_id.name }}</field>
+        <field name="email_to">{{ object.work_email or object.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Welcome, <t t-out="object.name"/>!</p>
+                <p>You have been invited to a tennis center <strong><t t-out="object.center_id.name"/></strong> as a coach.</p>
+                <div style="margin: 20px 0px;">
+                    <a t-att-href="object.get_base_url() + '/tennis/accept_invitation/coach/' + str(object.center_id.id)"
+                       style="background-color: #875A7B; padding: 12px 24px; text-decoration: none; color: white; border-radius: 5px; font-weight: bold;">
+                        Confirm coach role
+                    </a>
+                </div>
+                <p>Sincerely, The Court Management Team.</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="action_send_coach_invitation" model="ir.actions.server">
+        <field name="name">Send Coach Invitation</field>
+        <field name="model_id" ref="model_tennis_coach"/>
+        <field name="state">code</field>
+        <field name="code">
+template = env.ref('tennis.email_template_coach_invitation')
+template.send_mail(record.id, force_send=True)
+        </field>
+    </record>
+
+    <record id="rule_on_coach_creation" model="base.automation">
+        <field name="name">Tennis: Send Invite on Coach Create</field>
+        <field name="model_id" ref="model_tennis_coach"/>
+        <field name="trigger">on_create</field>
+        <field name="action_server_ids" eval="[(4, ref('tennis.action_send_coach_invitation'))]"/>
+    </record>
+
+    <record id="action_tennis_center_owner" model="ir.actions.act_window">
+        <field name="name">Tennis Center</field>
+        <field name="res_model">tennis.center</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,102 @@
+.o_tennis_dashboard {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #2D3748;
+
+    .bg-primary-soft { background-color: rgba(102, 126, 234, 0.15) !important; }
+    .bg-success-soft { background-color: rgba(72, 187, 120, 0.15) !important; }
+    .bg-info-soft    { background-color: rgba(66, 153, 225, 0.15) !important; }
+    .bg-warning-soft { background-color: rgba(236, 151, 6, 0.15) !important; }
+
+    .text-purple { color: #805AD5 !important; }
+    .bg-purple { background-color: #805AD5 !important; }
+
+    .dashboard-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 12px !important;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+    }
+
+    .content-card {
+        border-radius: 14px !important;
+    }
+
+    .custom-dashboard-table {
+        thead th {
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #EDF2F7;
+            padding-bottom: 12px;
+        }
+        tbody tr.clickable-row {
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+            &:hover {
+                background-color: #F7FAFC;
+            }
+        }
+        td {
+            padding: 14px 8px;
+            border-bottom: 1px solid #EDF2F7;
+        }
+    }
+
+    .dashboard-timeline {
+        max-height: 320px;
+        overflow-y: auto;
+
+        .timeline-item {
+            position: relative;
+            align-items: center;
+
+            .timeline-marker {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+        }
+        .border-bottom-dashed {
+            border-bottom: 1px dashed #E2E8F0;
+        }
+    }
+
+    .extra-small {
+        font-size: 11px;
+    }
+
+    .btn-action-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #F8FAFC;
+            border-color: #CBD5E1;
+            transform: translateY(-1px);
+        }
+
+        .action-icon {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+    }
+}

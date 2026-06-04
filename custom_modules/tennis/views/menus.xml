@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_tennis_entrance_check" model="ir.actions.server">
+        <field name="name">action.tennis.entrance.check</field>
+        <field name="model_id" ref="tennis.model_tennis_center"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_open_dashboard()
+        </field>
+    </record>
+
+    <menuitem id="menu_tennis_root" name="World Of Tennis" sequence="1" action="action_tennis_entrance_check"/>
+    <menuitem id="menu_tennis_center" name="Tennis Centers" sequence="1" parent="menu_tennis_root" action="action_tennis_center_owner" groups="tennis.group_tennis_owner"/>
+    <menuitem id="menu_tennis_coach" name="Coach" sequence="2" parent="menu_tennis_root" action="action_tennis_coach_server" groups="tennis.group_tennis_manager,tennis.group_tennis_coach"/>
+    <menuitem id="menu_tennis_training" name="Training" sequence="3" parent="menu_tennis_root" action="action_tennis_training" groups="tennis.group_tennis_owner,tennis.group_tennis_manager,tennis.group_tennis_coach"/>
+    <menuitem id="menu_tennis_training_approvals" name="Approvals" sequence="4" parent="menu_tennis_root" action="action_tennis_manager_approvals" groups="tennis.group_tennis_manager"/>
+    <menuitem id="menu_res_partner" name="Clients" sequence="5" parent="menu_tennis_root" action="action_tennis_clients" groups="tennis.group_tennis_owner,tennis.group_tennis_manager,tennis.group_tennis_coach"/>
+    <menuitem id="menu_tennis_training_coach_statistics" name="Statistics" sequence="6" parent="menu_tennis_root" action="action_tennis_coach_analytics" groups="tennis.group_tennis_coach"/>
+</odoo>

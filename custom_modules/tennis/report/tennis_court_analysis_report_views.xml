@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_court_analysis_pdf" model="ir.actions.report">
+        <field name="name">Analysis of Court-Hour Efficiency</field>
+        <field name="model">tennis.universal.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tennis.report_court_analysis_template</field>
+        <field name="report_file">tennis.report_court_analysis_template</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+    <template id="report_court_analysis_template">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="text-center mb-5">
+                        <h2>Analysis of Court-Hour Utilization Efficiency</h2>
+                        <h4>Analysis Period: <t t-out="date_from"/> — <t t-out="date_to"/></h4>
+                    </div>
+
+                    <table class="table table-bordered table-striped">
+                        <thead class="bg-200">
+                            <tr>
+                                <th>Tennis court</th>
+                                <th>Sports Center (Branch)</th>
+                                <th class="text-center">Number of Paid Sessions (Hours)</th>
+                                <th class="text-right">Generated Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="courts" t-as="court">
+                                <tr>
+                                    <td>
+                                        <strong t-out="court['court_name']"/>
+                                    </td>
+                                    <td class="align-middle" t-out="court['center_name']"/>
+                                    <td class="text-center align-middle" t-out="court['hours_count']"/>
+                                    <td class="text-right align-middle text-success font-weight-bold">
+                                        <span t-out="court['revenue']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr class="bg-100 font-weight-bold" style="border-top: 2px solid #000;">
+                                <td colspan="2">TOTAL FOR ALL COURTS</td>
+                                <td class="text-center">
+                                    <t t-out="total_hours"/>
+                                </td>
+                                <td class="text-right text-success" style="font-size: 16px;">
+                                    <span t-out="total_revenue" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
